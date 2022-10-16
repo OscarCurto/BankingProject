@@ -2,21 +2,38 @@ package com.example.BankingProject.services.users;
 
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
+import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
-import com.example.BankingProject.services.accounts.interfaces.AccountServiceInterface;
+import com.example.BankingProject.repositories.users.AccountHolderRepository;
+import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
-public class AccountHolderService implements AccountServiceInterface {
+public class AccountHolderService implements AccountHolderServiceInterface {
 
     @Autowired
     AccountRepository accountRepository;
 
+    @Autowired
+    AccountHolderRepository accountHolderRepository;
+
+
+    /*
+    * Show all Account Holder accounts
+    * Check balance
+    * Transfer Money
+    * */
+
+    //Use this method to show all Holder accounts
+    public List<AccountHolder> showHolderAccounts() {
+        return accountHolderRepository.findAll();
+    }
     //Use this method to log into your account
 
     //Use this method to check balance (User)
