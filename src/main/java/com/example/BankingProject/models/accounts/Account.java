@@ -36,10 +36,16 @@ public abstract class Account {
 
     private LocalDate creationDate;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Account() {
 
+    }
+
+    public Account(Money balance, AccountHolder primaryAccountHolder) {
+        this.balance = balance;
+        this.primaryAccountHolder = primaryAccountHolder;
     }
 
     public Account(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, LocalDate creationDate, Status status) {

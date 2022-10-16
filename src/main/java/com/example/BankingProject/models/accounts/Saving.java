@@ -30,6 +30,10 @@ public class Saving extends Account{
         this.lastInterestDay = lastInterestDay;
     }
 
+    public Saving(BigDecimal balance, AccountHolder accountHolder) {
+
+    }
+
     public Money getMinBalance() {
         return minBalance;
     }

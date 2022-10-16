@@ -5,12 +5,15 @@ import com.example.BankingProject.models.accounts.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class AccountHolder extends User {
 
     private String mail;
+
+    private LocalDate dateOfBirth;
 
     private String phone;
 
@@ -40,9 +43,10 @@ public class AccountHolder extends User {
 
     }
 
-    public AccountHolder(String name, String mail, String phone, Address address, Address mailingAddress, List<Account> primaryAccountHolderList, List<Account> secondaryAccountHolderList) {
+    public AccountHolder(String name, String mail, LocalDate dateOfBirth, String phone, Address address, Address mailingAddress, List<Account> primaryAccountHolderList, List<Account> secondaryAccountHolderList) {
         super(name);
         this.mail = mail;
+        this.dateOfBirth = dateOfBirth;
         this.phone = phone;
         this.address = address;
         this.mailingAddress = mailingAddress;
@@ -96,5 +100,13 @@ public class AccountHolder extends User {
 
     public void setSecondaryAccountHolderList(List<Account> secondaryAccountHolderList) {
         this.secondaryAccountHolderList = secondaryAccountHolderList;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

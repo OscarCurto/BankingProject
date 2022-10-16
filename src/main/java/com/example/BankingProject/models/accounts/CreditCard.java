@@ -30,6 +30,9 @@ public class CreditCard extends Account{
         this.lastInterestDay = lastInterestDay;
     }
 
+    public CreditCard(BigDecimal balance, AccountHolder accountHolder) {
+    }
+
     public Money getCreditLimit() {
         return creditLimit;
     }
