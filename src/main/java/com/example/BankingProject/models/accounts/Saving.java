@@ -34,6 +34,9 @@ public class Saving extends Account{
 
     }
 
+    public Saving(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status, BigDecimal minBalance, BigDecimal interestRate) {
+    }
+
     public Money getMinBalance() {
         return minBalance;
     }

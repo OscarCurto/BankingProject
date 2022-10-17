@@ -10,6 +10,8 @@ public interface AccountHolderControllerInterface {
 
     List<AccountHolder> showHolderAccounts();
 
+    AccountHolder createAccountHolderUser(AccountHolder accountHolder);
+
     BigDecimal checkBalance(Long id);
 
     String transferMoney(AccountHolderDTO accountHolderDTO);

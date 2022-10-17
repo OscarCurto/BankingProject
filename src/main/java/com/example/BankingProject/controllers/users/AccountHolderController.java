@@ -23,6 +23,12 @@ public class AccountHolderController implements AccountHolderControllerInterface
         return accountHolderServiceInterface.showHolderAccounts();
     }
 
+    @PostMapping("holder/createHolderUser")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AccountHolder createAccountHolderUser(@RequestBody AccountHolder accountHolder){
+        return accountHolderServiceInterface.createAccountHolderUser(accountHolder);
+    }
+
     @GetMapping("/checkHolderBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BigDecimal checkBalance(@PathVariable Long id) {

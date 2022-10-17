@@ -8,6 +8,7 @@ import java.util.List;
 public interface AccountHolderServiceInterface {
 
     List<AccountHolder> showHolderAccounts();
+    AccountHolder createAccountHolderUser(AccountHolder accountHolder);
     BigDecimal checkBalance(Long id);
     String transferMoney(Long senderAccountId, BigDecimal amount, Long receiverAccountId);
 }

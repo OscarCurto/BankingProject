@@ -1,10 +1,12 @@
 package com.example.BankingProject.services.users;
 
+import com.example.BankingProject.dtos.AccountHolderDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
+import com.example.BankingProject.repositories.users.UserRepository;
 import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +25,13 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     @Autowired
     AccountHolderRepository accountHolderRepository;
 
+    @Autowired
+    UserRepository userRepository;
 
     /*
     * Show all Account Holder accounts
+    * Create a new AccountHolderUser
+    * LOGIN TODO
     * Check balance
     * Transfer Money
     * */
@@ -34,6 +40,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     public List<AccountHolder> showHolderAccounts() {
         return accountHolderRepository.findAll();
     }
+
+    //Use this method to create a new Account Holder User
+    public AccountHolder createAccountHolderUser(AccountHolder accountHolder) {
+        return accountHolderRepository.save(accountHolder);
+    }
+
     //Use this method to log into your account
 
     //Use this method to check balance (User)

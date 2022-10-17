@@ -2,9 +2,9 @@ package com.example.BankingProject.controllers.users;
 
 import com.example.BankingProject.controllers.users.interfaces.AdminControllerInterface;
 import com.example.BankingProject.dtos.AccountDTO;
-import com.example.BankingProject.embedables.Money;
-import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
+import com.example.BankingProject.models.users.Admin;
+import com.example.BankingProject.models.users.ThirdPartyUser;
 import com.example.BankingProject.models.users.User;
 import com.example.BankingProject.services.users.interfaces.AdminServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,22 @@ public class AdminController implements AdminControllerInterface {
         return adminServiceInterface.showAccounts();
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping("/admin/createAccount")
     @ResponseStatus(HttpStatus.CREATED)
     public Account createAccount(@RequestBody AccountDTO accountDTO) {
         return adminServiceInterface.createAccount(accountDTO);
+    }
+
+    @PostMapping("/admin/createThirdPartyUser")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ThirdPartyUser createThirdPartyUser(@RequestBody ThirdPartyUser thirdPartyUser){
+        return adminServiceInterface.createThirdPartyUser(thirdPartyUser);
+    }
+
+    @PostMapping("/admin/createAdminUser")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Admin createAdminUser(Admin admin){
+        return adminServiceInterface.createAdminUser(admin);
     }
 
     @DeleteMapping("admin/delete/{id}")

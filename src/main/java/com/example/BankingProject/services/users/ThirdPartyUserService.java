@@ -1,5 +1,7 @@
 package com.example.BankingProject.services.users;
 
+import com.example.BankingProject.dtos.AccountHolderDTO;
+import com.example.BankingProject.models.users.ThirdPartyUser;
 import com.example.BankingProject.repositories.users.ThirdPartyUserRepository;
 import com.example.BankingProject.services.users.interfaces.ThirdPartyUserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

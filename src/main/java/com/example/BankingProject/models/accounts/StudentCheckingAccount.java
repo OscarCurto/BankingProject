@@ -23,4 +23,7 @@ public class StudentCheckingAccount extends Account {
     public StudentCheckingAccount(BigDecimal balance, AccountHolder accountHolder) {
 
     }
+
+    public StudentCheckingAccount(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status) {
+    }
 }

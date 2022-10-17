@@ -33,6 +33,9 @@ public class CreditCard extends Account{
     public CreditCard(BigDecimal balance, AccountHolder accountHolder) {
     }
 
+    public CreditCard(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate, LocalDate creationDate, LocalDate lastAddedInterestRate) {
+    }
+
     public Money getCreditLimit() {
         return creditLimit;
     }

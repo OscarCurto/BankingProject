@@ -54,6 +54,9 @@ public class AccountHolder extends User {
         this.secondaryAccountHolderList = secondaryAccountHolderList;
     }
 
+    public AccountHolder(String userName, String password) {
+    }
+
     public String getMail() {
         return mail;
     }
