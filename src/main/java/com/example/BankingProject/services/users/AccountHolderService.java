@@ -2,12 +2,19 @@ package com.example.BankingProject.services.users;
 
 import com.example.BankingProject.dtos.AccountHolderDTO;
 import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
+import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
+import com.example.BankingProject.models.accounts.CheckingAccount;
+import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
+import com.example.BankingProject.repositories.accounts.CheckingAccountRepository;
+import com.example.BankingProject.repositories.accounts.SavingRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
 import com.example.BankingProject.repositories.users.UserRepository;
+import com.example.BankingProject.services.accounts.CheckingAccountService;
+import com.example.BankingProject.services.accounts.SavingService;
 import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,7 +35,16 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     AccountHolderRepository accountHolderRepository;
 
     @Autowired
-    UserRepository userRepository;
+    SavingService savingService;
+
+    @Autowired
+    CheckingAccountRepository checkingAccountRepository;
+
+    @Autowired
+    CheckingAccountService checkingAccountService;
+
+    @Autowired
+    SavingRepository savingRepository;
 
     /*
      * Show all Account Holder accounts
@@ -38,8 +55,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
      * */
 
     //Use this method to show all Holder accounts
-    public List<AccountHolder> showHolderAccounts() {
-        return accountHolderRepository.findAll();
+    public List<Account> showHolderAccounts(Long id) {
+        AccountHolder accountHolder = accountHolderRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
+        List<Account> accounts = new ArrayList<>();
+        accounts.addAll(accountHolder.getPrimaryAccountHolderList());
+        accounts.addAll(accountHolder.getSecondaryAccountHolderList());
+        return accounts;
     }
 
     //Use this method to create a new Account Holder User
@@ -65,17 +86,29 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     }
 
     //Use this method to transfer money between accounts
-    public String transferMoney(Long senderAccountId, BigDecimal amount, Long receiverAccountId) {
-        Account senderAccount = accountRepository.findById(senderAccountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sender id does not exist"));
-        Account receiverAccount = accountRepository.findById(receiverAccountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Receiver id does not exist"));
+    public BigDecimal transferMoney(TransferMoneyDTO transferMoneyDTO) {
+        Account senderAccount = accountRepository.findById(transferMoneyDTO.getSenderAccountId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
+        Account receiverAccount = accountRepository.findById(transferMoneyDTO.getSenderAccountId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
+        Money sent = new Money(senderAccount.getBalance().decreaseAmount(transferMoneyDTO.getAmount()));
+        Money received = new Money(receiverAccount.getBalance().increaseAmount(transferMoneyDTO.getAmount()));
+        BigDecimal init = new BigDecimal(0);
 
-        senderAccount.setBalance(new Money(senderAccount.getBalance().decreaseAmount(amount)));
-        receiverAccount.setBalance(new Money(receiverAccount.getBalance().increaseAmount(amount)));
+        if (senderAccount.getBalance().getAmount().subtract(transferMoneyDTO.getAmount()).compareTo(init) < 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Not enough money to transfer");
+        }
 
-        accountRepository.save(senderAccount);
-        accountRepository.save(receiverAccount);
-
-        String transfer = senderAccount.getPrimaryAccountHolder().getName() + "Has sent " + amount + " to " + receiverAccount.getPrimaryAccountHolder().getName();
-        return transfer;
+        if (checkingAccountRepository.existsById(transferMoneyDTO.getSenderAccountId())) {
+            CheckingAccount checkingSenderAccount = checkingAccountRepository.findById(transferMoneyDTO.getSenderAccountId()).get();
+            return checkingAccountService.transferCheckingAccount(checkingSenderAccount, transferMoneyDTO.getAmount(), receiverAccount, sent, received);
+        } else if (savingRepository.existsById(transferMoneyDTO.getSenderAccountId())) {
+            Saving savinSenderAccount = savingRepository.findById(transferMoneyDTO.getSenderAccountId()).get();
+            return savingService.transferSaving(savinSenderAccount, transferMoneyDTO.getAmount(), receiverAccount, sent, received);
+        } else {
+            senderAccount.setBalance(sent);
+            receiverAccount.setBalance(received);
+            accountRepository.save(senderAccount);
+            accountRepository.save(receiverAccount);
+            return senderAccount.getBalance().getAmount();
+        }
     }
 }

@@ -10,7 +10,6 @@ public class AccountDTO {
 
     private Long id;
     private Long accountHolderId;
-    @Embedded
     private BigDecimal balance;
     private BigDecimal minBalance;
     private BigDecimal creditLimit;

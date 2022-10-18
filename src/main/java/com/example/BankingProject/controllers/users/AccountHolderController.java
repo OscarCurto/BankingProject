@@ -3,6 +3,8 @@ package com.example.BankingProject.controllers.users;
 import com.example.BankingProject.controllers.users.interfaces.AccountHolderControllerInterface;
 import com.example.BankingProject.dtos.AccountHolderDTO;
 import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
+import com.example.BankingProject.dtos.TransferMoneyDTO;
+import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +20,15 @@ public class AccountHolderController implements AccountHolderControllerInterface
     @Autowired
     AccountHolderServiceInterface accountHolderServiceInterface;
 
-    @GetMapping("/holderAccount")
+    @GetMapping("/holderAccount/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<AccountHolder> showHolderAccounts() {
-        return accountHolderServiceInterface.showHolderAccounts();
+    public List<Account> showHolderAccounts(@PathVariable Long id) {
+        return accountHolderServiceInterface.showHolderAccounts(id);
     }
 
     @PostMapping("holder/createHolderUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolder createAccountHolderUser(@RequestBody AccountHolder accountHolder){
+    public AccountHolder createAccountHolderUser(@RequestBody AccountHolder accountHolder) {
         return accountHolderServiceInterface.createAccountHolderUser(accountHolder);
     }
 
@@ -38,8 +40,8 @@ public class AccountHolderController implements AccountHolderControllerInterface
 
     @PatchMapping("/transferHolder")
     @ResponseStatus(HttpStatus.OK)
-    public String transferMoney(@RequestBody AccountHolderDTO accountHolderDTO) {
-        return accountHolderServiceInterface.transferMoney(accountHolderDTO.getSenderAccountId(),accountHolderDTO.getAmount(), accountHolderDTO.getReceiverAccountId());
+    public BigDecimal transferMoney(@RequestBody TransferMoneyDTO transferMoneyDTO) {
+        return accountHolderServiceInterface.transferMoney(transferMoneyDTO);
     }
 
 }

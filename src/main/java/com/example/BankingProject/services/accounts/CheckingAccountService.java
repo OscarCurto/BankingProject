@@ -1,10 +1,12 @@
 package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.StudentCheckingAccount;
 import com.example.BankingProject.models.users.AccountHolder;
+import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.CheckingAccountRepository;
 import com.example.BankingProject.repositories.accounts.StudentCheckingAccountRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
@@ -12,6 +14,7 @@ import com.example.BankingProject.services.accounts.interfaces.CheckingAccountSe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -27,6 +30,9 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
 
     @Autowired
     StudentCheckingAccountRepository studentCheckingAccountRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     //Use this method to show a list of checkingAccount
     public List<CheckingAccount> showCheckingAccounts() {
@@ -70,5 +76,17 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
             return studentCheckingAccountRepository.save(studentCheckingAccount);
         }
         throw new IllegalArgumentException("Primary Holder does not exist" );
+    }
+
+    public BigDecimal transferCheckingAccount(CheckingAccount checkingSender, BigDecimal transfer, Account accountReceiver, Money sent, Money received){
+        if (checkingSender.getBalance().getAmount().compareTo(checkingSender.getMinimumBalance().getAmount())<0){
+            sent.decreaseAmount(checkingSender.getPenaltyFee().getAmount());
+        }
+
+        checkingSender.setBalance(sent);
+        accountReceiver.setBalance(received);
+        checkingAccountRepository.save(checkingSender);
+        accountRepository.save(accountReceiver);
+        return checkingSender.getBalance().getAmount();
     }
 }

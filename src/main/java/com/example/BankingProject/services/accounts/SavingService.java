@@ -1,14 +1,19 @@
 package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.embedables.Money;
+import com.example.BankingProject.models.accounts.Account;
+import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.users.AccountHolder;
+import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
 import com.example.BankingProject.services.accounts.interfaces.SavingServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,6 +24,9 @@ public class SavingService implements SavingServiceInterface {
 
     @Autowired
     AccountHolderRepository accountHolderRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     //Use this method to show a list of SavingAccounts
     public List<Saving> showSavingAccounts() {
@@ -49,5 +57,17 @@ public class SavingService implements SavingServiceInterface {
             return savingRepository.save(saving);
         }
         throw new IllegalArgumentException("Primary Holder does not exist" );
+    }
+
+    public BigDecimal transferSaving(Saving savingSender, BigDecimal transfer, Account accountReceiver, Money sent, Money received) {
+        if (savingSender.getBalance().getAmount().compareTo(savingSender.getMinBalance().getAmount())<0){
+            sent.decreaseAmount(savingSender.getPenaltyFee().getAmount());
+        }
+
+        savingSender.setBalance(sent);
+        accountReceiver.setBalance(received);
+        savingRepository.save(savingSender);
+        accountRepository.save(accountReceiver);
+        return savingSender.getBalance().getAmount();
     }
 }
