@@ -2,11 +2,13 @@ package com.example.BankingProject.models.accounts;
 
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
+import com.example.BankingProject.models.transactions.Transaction;
 import com.example.BankingProject.models.users.AccountHolder;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
@@ -38,6 +40,9 @@ public abstract class Account {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToMany(mappedBy = "account")
+    private List<Transaction> transaction;
 
     public Account() {
 
@@ -102,5 +107,13 @@ public abstract class Account {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Transaction> getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(List<Transaction> transaction) {
+        this.transaction = transaction;
     }
 }
