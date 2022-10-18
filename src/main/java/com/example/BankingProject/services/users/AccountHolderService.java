@@ -10,10 +10,12 @@ import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.CheckingAccountRepository;
+import com.example.BankingProject.repositories.accounts.CreditCardRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
 import com.example.BankingProject.repositories.users.UserRepository;
 import com.example.BankingProject.services.accounts.CheckingAccountService;
+import com.example.BankingProject.services.accounts.CreditCardService;
 import com.example.BankingProject.services.accounts.SavingService;
 import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
 
     @Autowired
     SavingRepository savingRepository;
+
+    @Autowired
+    CreditCardRepository creditCardRepository;
+
+    @Autowired
+    CreditCardService creditCardService;
 
     /*
      * Show all Account Holder accounts
@@ -79,6 +87,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
 
         if (account.getPrimaryAccountHolder() == accountHolder || account.getSecondaryAccountHolder() == accountHolder) {
+            if (savingRepository.existsById(checkOwnBalanceDTO.getAccountId())) {
+                return savingService.interestRateSaving(checkOwnBalanceDTO.getAccountId()).getAmount();
+            }
+            if (creditCardRepository.existsById(checkOwnBalanceDTO.getAccountId())) {
+                creditCardService.interestRateCreditCard(checkOwnBalanceDTO.getAccountId()).getAmount();
+            }
             return account.getBalance().getAmount();
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Can't access to this account");

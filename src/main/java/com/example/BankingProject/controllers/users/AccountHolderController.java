@@ -32,7 +32,7 @@ public class AccountHolderController implements AccountHolderControllerInterface
         return accountHolderServiceInterface.createAccountHolderUser(accountHolder);
     }
 
-    @GetMapping("/checkHolderBalance/{id}")
+    @GetMapping("/checkHolderBalance")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BigDecimal checkBalanceUser(@RequestBody CheckOwnBalanceDTO checkOwnBalanceDTO) {
         return accountHolderServiceInterface.checkBalanceUser(checkOwnBalanceDTO);

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -34,13 +36,13 @@ public class SavingService implements SavingServiceInterface {
     }
 
     //Use this method to create a new Saving Account
-    public Saving createSavingAccount(AccountDTO accountDTO){
-        if (accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).isPresent()){
+    public Saving createSavingAccount(AccountDTO accountDTO) {
+        if (accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).isPresent()) {
             AccountHolder primaryAccountHolder = accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).get();
             AccountHolder secondaryAccountHolder = null;
 
-            if (accountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).isPresent()){
-              secondaryAccountHolder = accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).get();
+            if (accountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).isPresent()) {
+                secondaryAccountHolder = accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).get();
             }
 
             Saving saving = new Saving(
@@ -56,11 +58,11 @@ public class SavingService implements SavingServiceInterface {
             );
             return savingRepository.save(saving);
         }
-        throw new IllegalArgumentException("Primary Holder does not exist" );
+        throw new IllegalArgumentException("Primary Holder does not exist");
     }
 
     public BigDecimal transferSaving(Saving savingSender, BigDecimal transfer, Account accountReceiver, Money sent, Money received) {
-        if (savingSender.getBalance().getAmount().compareTo(savingSender.getMinBalance().getAmount())<0){
+        if (savingSender.getBalance().getAmount().compareTo(savingSender.getMinBalance().getAmount()) < 0) {
             sent.decreaseAmount(savingSender.getPenaltyFee().getAmount());
         }
 
@@ -69,5 +71,19 @@ public class SavingService implements SavingServiceInterface {
         savingRepository.save(savingSender);
         accountRepository.save(accountReceiver);
         return savingSender.getBalance().getAmount();
+    }
+
+    public Money interestRateSaving(Long id) {
+        Saving saving = savingRepository.findById(id).get();
+        Integer transaction = Period.between(saving.getLastInterestDay(), LocalDate.now()).getYears();
+        if (transaction >= 1) {
+            BigDecimal year = new BigDecimal(1);
+            for (int i = 0; i < transaction; i++) {
+                Money interestRate = new Money(saving.getBalance().getAmount().multiply(year.add(saving.getInterestRate())));
+                saving.setBalance(interestRate);
+                savingRepository.save(saving);
+            }
+        }
+        return saving.getBalance();
     }
 }
