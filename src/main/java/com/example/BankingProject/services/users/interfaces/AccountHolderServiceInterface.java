@@ -1,5 +1,6 @@
 package com.example.BankingProject.services.users.interfaces;
 
+import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.models.users.AccountHolder;
 
 import java.math.BigDecimal;
@@ -9,6 +10,6 @@ public interface AccountHolderServiceInterface {
 
     List<AccountHolder> showHolderAccounts();
     AccountHolder createAccountHolderUser(AccountHolder accountHolder);
-    BigDecimal checkBalance(Long id);
+    BigDecimal checkBalanceUser(CheckOwnBalanceDTO checkOwnBalanceDTO);
     String transferMoney(Long senderAccountId, BigDecimal amount, Long receiverAccountId);
 }

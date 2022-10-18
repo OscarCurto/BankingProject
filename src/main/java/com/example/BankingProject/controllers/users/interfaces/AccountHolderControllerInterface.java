@@ -1,6 +1,7 @@
 package com.example.BankingProject.controllers.users.interfaces;
 
 import com.example.BankingProject.dtos.AccountHolderDTO;
+import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.models.users.AccountHolder;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ public interface AccountHolderControllerInterface {
 
     AccountHolder createAccountHolderUser(AccountHolder accountHolder);
 
-    BigDecimal checkBalance(Long id);
+    BigDecimal checkBalanceUser(CheckOwnBalanceDTO checkOwnBalanceDTO);
 
     String transferMoney(AccountHolderDTO accountHolderDTO);
 }

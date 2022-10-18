@@ -1,6 +1,7 @@
 package com.example.BankingProject.services.users;
 
 import com.example.BankingProject.dtos.AccountHolderDTO;
+import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.users.AccountHolder;
@@ -29,12 +30,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     UserRepository userRepository;
 
     /*
-    * Show all Account Holder accounts
-    * Create a new AccountHolderUser
-    * LOGIN TODO
-    * Check balance
-    * Transfer Money
-    * */
+     * Show all Account Holder accounts
+     * Create a new AccountHolderUser
+     * LOGIN TODO
+     * Check own balance
+     * Transfer Money
+     * */
 
     //Use this method to show all Holder accounts
     public List<AccountHolder> showHolderAccounts() {
@@ -49,12 +50,17 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     //Use this method to log into your account
 
     //Use this method to check balance (User)
-    public BigDecimal checkBalance(Long id){
-        if (accountRepository.findById(id).isPresent()){
-            Account account = accountRepository.findById(id).get();
+    public BigDecimal checkBalanceUser(CheckOwnBalanceDTO checkOwnBalanceDTO) {
+        AccountHolder accountHolder = accountHolderRepository.findById(checkOwnBalanceDTO.getUserId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing user"));
+
+        Account account = accountRepository.findById(checkOwnBalanceDTO.getAccountId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
+
+        if (account.getPrimaryAccountHolder() == accountHolder || account.getSecondaryAccountHolder() == accountHolder) {
             return account.getBalance().getAmount();
-        }else {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Not an existing account");
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Can't access to this account");
         }
     }
 

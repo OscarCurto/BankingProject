@@ -2,6 +2,7 @@ package com.example.BankingProject.controllers.users;
 
 import com.example.BankingProject.controllers.users.interfaces.AccountHolderControllerInterface;
 import com.example.BankingProject.dtos.AccountHolderDTO;
+import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class AccountHolderController implements AccountHolderControllerInterface
 
     @GetMapping("/checkHolderBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public BigDecimal checkBalance(@PathVariable Long id) {
-        return accountHolderServiceInterface.checkBalance(id);
+    public BigDecimal checkBalanceUser(@RequestBody CheckOwnBalanceDTO checkOwnBalanceDTO) {
+        return accountHolderServiceInterface.checkBalanceUser(checkOwnBalanceDTO);
     }
 
     @PatchMapping("/transferHolder")

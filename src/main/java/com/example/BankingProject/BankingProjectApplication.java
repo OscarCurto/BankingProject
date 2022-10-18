@@ -10,4 +10,9 @@ public class BankingProjectApplication {
 		SpringApplication.run(BankingProjectApplication.class, args);
 	}
 
+	/*
+	* TODO
+	* INTEREST RATE, PENALTY FEE, THIRD PARTY USER, BALANCE OWN ACCOUNT, TEST, SECURITY, LOG IN
+	* */
+
 }
