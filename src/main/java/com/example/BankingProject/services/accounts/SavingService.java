@@ -3,7 +3,6 @@ package com.example.BankingProject.services.accounts;
 import com.example.BankingProject.dtos.AccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
-import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 
 @Service
 public class SavingService implements SavingServiceInterface {
@@ -29,11 +27,6 @@ public class SavingService implements SavingServiceInterface {
 
     @Autowired
     AccountRepository accountRepository;
-
-    //Use this method to show a list of SavingAccounts
-    public List<Saving> showSavingAccounts() {
-        return savingRepository.findAll();
-    }
 
     //Use this method to create a new Saving Account
     public Saving createSavingAccount(AccountDTO accountDTO) {

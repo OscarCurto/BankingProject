@@ -1,6 +1,5 @@
 package com.example.BankingProject.services.users;
 
-import com.example.BankingProject.dtos.AccountHolderDTO;
 import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.embedables.Money;
@@ -13,7 +12,6 @@ import com.example.BankingProject.repositories.accounts.CheckingAccountRepositor
 import com.example.BankingProject.repositories.accounts.CreditCardRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
-import com.example.BankingProject.repositories.users.UserRepository;
 import com.example.BankingProject.services.accounts.CheckingAccountService;
 import com.example.BankingProject.services.accounts.CreditCardService;
 import com.example.BankingProject.services.accounts.SavingService;

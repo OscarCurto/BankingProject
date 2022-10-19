@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface CheckingAccountServiceInterface {
 
-    List<CheckingAccount> showCheckingAccounts();
 }

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
+
 
 @Service
 public class CheckingAccountService implements CheckingAccountServiceInterface {
@@ -34,10 +34,6 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
     @Autowired
     AccountRepository accountRepository;
 
-    //Use this method to show a list of checkingAccount
-    public List<CheckingAccount> showCheckingAccounts() {
-        return checkingAccountRepository.findAll();
-    }
 
     //Use this method to create a new Checking Account
     public Account createCheckingAccount(AccountDTO accountDTO) {

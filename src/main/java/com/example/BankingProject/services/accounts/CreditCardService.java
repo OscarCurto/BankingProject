@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 
 @Service
 public class CreditCardService implements CreditCardServiceInterface {
@@ -23,11 +22,6 @@ public class CreditCardService implements CreditCardServiceInterface {
 
     @Autowired
     AccountHolderRepository accountHolderRepository;
-
-    //Use this method to show a list of creditCardAccounts
-    public List<CreditCard> showCreditCardAccounts() {
-        return creditCardRepository.findAll();
-    }
 
     //Use this method to create a new Credit Card account
     public CreditCard createCreditCardAccount(AccountDTO accountDTO) {

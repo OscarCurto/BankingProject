@@ -17,9 +17,4 @@ public class AccountController implements AccountControllerInterface {
     @Autowired
     AccountServiceInterface accountServiceInterface;
 
-    @GetMapping("/accounts")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<Account> showAccounts() {
-        return accountServiceInterface.showAccounts();
-    }
 }

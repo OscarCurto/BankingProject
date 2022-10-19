@@ -14,9 +14,4 @@ public class AccountService implements AccountServiceInterface {
     @Autowired
     AccountRepository accountRepository;
 
-    //Use this method to show a list of accounts
-    public List<Account> showAccounts() {
-        return accountRepository.findAll();
-    }
-
 }
