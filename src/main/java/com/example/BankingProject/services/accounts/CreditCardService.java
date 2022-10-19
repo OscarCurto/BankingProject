@@ -1,6 +1,7 @@
 package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.CreditCard;
 import com.example.BankingProject.models.users.AccountHolder;
@@ -24,24 +25,24 @@ public class CreditCardService implements CreditCardServiceInterface {
     AccountHolderRepository accountHolderRepository;
 
     //Use this method to create a new Credit Card account
-    public CreditCard createCreditCardAccount(AccountDTO accountDTO) {
-        if (accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).isPresent()) {
-            AccountHolder primaryAccountHolder = accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).get();
+    public CreditCard createCreditCardAccount(CreateAccountDTO createAccountDTO) {
+        if (accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+            AccountHolder primaryAccountHolder = accountHolderRepository.findById(createAccountDTO.getId()).get();
             AccountHolder secondaryAccountHolder = null;
 
-            if (accountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).isPresent()) {
-                secondaryAccountHolder = accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).get();
+            if (createAccountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+                secondaryAccountHolder = accountHolderRepository.findById(createAccountDTO.getId()).get();
             }
 
             CreditCard creditCard = new CreditCard(
-                    accountDTO.getBalance(),
+                    createAccountDTO.getBalance(),
                     primaryAccountHolder,
                     secondaryAccountHolder,
-                    accountDTO.getPenaltyFee(),
-                    accountDTO.getCreditLimit(),
-                    accountDTO.getInterestRate(),
-                    accountDTO.getCreationDate(),
-                    accountDTO.getLastAddedInterestRate()
+                    createAccountDTO.getPenaltyFee(),
+                    createAccountDTO.getCreditLimit(),
+                    createAccountDTO.getInterestRate(),
+                    createAccountDTO.getCreationDate(),
+                    createAccountDTO.getLastAddedInterestRate()
             );
             return creditCardRepository.save(creditCard);
         }

@@ -23,7 +23,8 @@ public class Saving extends Account{
 
     }
 
-    public Saving(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate, LocalDate lastInterestDay) {
+    public Saving(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder,
+                  LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate, LocalDate lastInterestDay) {
         super(balance, primaryAccountHolder, secondaryAccountHolder, creationDate, status);
         this.minBalance = minBalance;
         this.interestRate = interestRate;
@@ -35,6 +36,11 @@ public class Saving extends Account{
     }
 
     public Saving(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status, BigDecimal minBalance, BigDecimal interestRate) {
+    }
+
+    public Saving(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee,
+                  LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate) {
+        //Money balance, ah1, ah2, bigdecimal penaltyfee, ld creationDate, status status, money minBal, bigDeciaml interestRate
     }
 
     public Money getMinBalance() {

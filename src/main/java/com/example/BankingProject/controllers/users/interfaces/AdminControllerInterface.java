@@ -1,6 +1,6 @@
 package com.example.BankingProject.controllers.users.interfaces;
 
-import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.dtos.*;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
@@ -13,12 +13,12 @@ import java.util.List;
 
 public interface AdminControllerInterface {
     List<Account> showAccounts();
-    Account createAccount(AccountDTO accountDTO);
-    ThirdPartyUser createThirdPartyUser(ThirdPartyUser thirdPartyUser);
-    Admin createAdminUser(Admin admin);
-    String deleteAccount(Long id);
+    Account createAccount(CreateAccountDTO createAccountDTO);
+    ThirdPartyUser createThirdPartyUser(ThirdPartyDTO thirdPartyDTO);
+    Admin createAdminUser(AdminDTO adminDTO);
+    void deleteAccount(Long id);
     BigDecimal checkBalanceAdmin(Long id);
-    Account modifyBalanceAdmin(AccountDTO accountDTO);
-    Account modifyStatus(AccountDTO accountDTO);
+    Account modifyBalanceAdmin(ModifyBalanceDTO modifyBalanceDTO);
+    Account modifyStatus(StatusDTO statusDTO);
     List<User> getAllUsers();
 }

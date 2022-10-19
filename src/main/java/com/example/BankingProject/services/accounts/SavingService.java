@@ -1,6 +1,7 @@
 package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.Saving;
@@ -29,24 +30,24 @@ public class SavingService implements SavingServiceInterface {
     AccountRepository accountRepository;
 
     //Use this method to create a new Saving Account
-    public Saving createSavingAccount(AccountDTO accountDTO) {
-        if (accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).isPresent()) {
-            AccountHolder primaryAccountHolder = accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).get();
+    public Saving createSavingAccount(CreateAccountDTO createAccountDTO) {
+        if (accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+            AccountHolder primaryAccountHolder = accountHolderRepository.findById(createAccountDTO.getId()).get();
             AccountHolder secondaryAccountHolder = null;
 
-            if (accountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).isPresent()) {
-                secondaryAccountHolder = accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).get();
+            if (createAccountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+                secondaryAccountHolder = accountHolderRepository.findById(createAccountDTO.getId()).get();
             }
 
             Saving saving = new Saving(
-                    accountDTO.getBalance(),
+                    createAccountDTO.getBalance(),
                     primaryAccountHolder,
                     secondaryAccountHolder,
-                    accountDTO.getPenaltyFee(),
-                    accountDTO.getCreationDate(),
-                    accountDTO.getStatus(),
-                    accountDTO.getMinBalance(),
-                    accountDTO.getInterestRate()
+                    createAccountDTO.getPenaltyFee(),
+                    createAccountDTO.getCreationDate(),
+                    createAccountDTO.getStatus(),
+                    createAccountDTO.getMinBalance(),
+                    createAccountDTO.getInterestRate()
 
             );
             return savingRepository.save(saving);

@@ -24,10 +24,6 @@ public class AccountDTO {
     private BigDecimal monthlyMaintenanceFee;
     private LocalDate lastAddedInterestRate;
 
-    public AccountDTO(Status status) {
-        this.status = status;
-    }
-
     public AccountDTO(BigDecimal amount) {
         this.id = id;
         this.amount = amount;
@@ -38,25 +34,25 @@ public class AccountDTO {
         this.accountType = accountType;
     }
 
-    public AccountDTO(Long id, Long accountHolderId, BigDecimal balance, BigDecimal minBalance, BigDecimal creditLimit, BigDecimal interestRate,
-                      String accountType, BigDecimal amount, Status status, Long primaryAccountHolder, Long secondaryAccountHolder,
-                      BigDecimal penaltyFee, LocalDate creationDate, BigDecimal monthlyMaintenanceFee, LocalDate lastAddedInterestRate) {
-        this.id = id;
-        this.accountHolderId = accountHolderId;
-        this.balance = balance;
-        this.minBalance = minBalance;
-        this.creditLimit = creditLimit;
-        this.interestRate = interestRate;
-        this.accountType = accountType;
-        this.amount = amount;
-        this.status = status;
-        this.primaryAccountHolder = primaryAccountHolder;
-        this.secondaryAccountHolder = secondaryAccountHolder;
-        this.penaltyFee = penaltyFee;
-        this.creationDate = creationDate;
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-        this.lastAddedInterestRate = lastAddedInterestRate;
-    }
+//    public AccountDTO(Long id, Long accountHolderId, BigDecimal balance, BigDecimal minBalance, BigDecimal creditLimit, BigDecimal interestRate,
+//                      String accountType, BigDecimal amount, Status status, Long primaryAccountHolder, Long secondaryAccountHolder,
+//                      BigDecimal penaltyFee, LocalDate creationDate, BigDecimal monthlyMaintenanceFee, LocalDate lastAddedInterestRate) {
+//        this.id = id;
+//        this.accountHolderId = accountHolderId;
+//        this.balance = balance;
+//        this.minBalance = minBalance;
+//        this.creditLimit = creditLimit;
+//        this.interestRate = interestRate;
+//        this.accountType = accountType;
+//        this.amount = amount;
+//        this.status = status;
+//        this.primaryAccountHolder = primaryAccountHolder;
+//        this.secondaryAccountHolder = secondaryAccountHolder;
+//        this.penaltyFee = penaltyFee;
+//        this.creationDate = creationDate;
+//        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
+//        this.lastAddedInterestRate = lastAddedInterestRate;
+//    }
 
     public BigDecimal getBalance() {
         return balance;

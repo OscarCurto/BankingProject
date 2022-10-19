@@ -33,9 +33,31 @@ public class AccountHolderDTO {
         this.amount = amount;
     }
 
+    //CREATE ACCOUNT HOLDER DTO
     public AccountHolderDTO(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public AccountHolderDTO(Long senderAccountId, Long receiverAccountId, String name, String mail, String phone, LocalDate birthDate, String accountType,
+                            Money initialBalance, BigDecimal amount, String username, String password, List<Account> primaryAccountHolderList,
+                            List<Account> secondaryAccountHolderList, Address primaryHolderAccountAddress, Address secondaryAccountHolderAddress, String hashedKey) {
+        this.senderAccountId = senderAccountId;
+        this.receiverAccountId = receiverAccountId;
+        this.name = name;
+        this.mail = mail;
+        this.phone = phone;
+        this.birthDate = birthDate;
+        this.accountType = accountType;
+        this.initialBalance = initialBalance;
+        this.amount = amount;
+        this.username = username;
+        this.password = password;
+        this.primaryAccountHolderList = primaryAccountHolderList;
+        this.secondaryAccountHolderList = secondaryAccountHolderList;
+        this.primaryHolderAccountAddress = primaryHolderAccountAddress;
+        this.secondaryAccountHolderAddress = secondaryAccountHolderAddress;
+        HashedKey = hashedKey;
     }
 
     public Long getSenderAccountId() {

@@ -1,21 +1,119 @@
 package com.example.BankingProject;
 
+import com.example.BankingProject.embedables.Address;
+import com.example.BankingProject.embedables.Money;
+import com.example.BankingProject.models.accounts.CheckingAccount;
+import com.example.BankingProject.models.accounts.CreditCard;
+import com.example.BankingProject.models.accounts.Saving;
+import com.example.BankingProject.models.users.AccountHolder;
+import com.example.BankingProject.models.users.Admin;
+import com.example.BankingProject.repositories.accounts.AccountRepository;
+import com.example.BankingProject.repositories.users.AdminRepository;
+import com.example.BankingProject.repositories.users.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 @SpringBootApplication
-public class BankingProjectApplication {
+public class BankingProjectApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BankingProjectApplication.class, args);
-	}
+    @Autowired
+    UserRepository userRepository;
 
-	/*
-	* TODO
-	* THIRD PARTY USER, TEST, SECURITY, LOG IN //CAMBIAR TODOS LO MÉTODOS QUE DEVUELVE STRING Y BORRAS LAS LISTAS DE SHOW ACCOUNTS DE TODOS MENOS ADMIN Y ACCHOLDER
-	*
-	* SAVING
-	* @DecimalMin(value = "100")
-	* */
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    AdminRepository adminRepository;
+
+    @Override
+    public void run(String... args) throws Exception {
+        Admin admin = new Admin("Oscar", "1234");
+        userRepository.save(admin);
+
+        AccountHolder accountHolder1 = new AccountHolder();
+        accountHolder1.setName("Quim");
+        accountHolder1.setDateOfBirth(LocalDate.of(2008, 05, 10));
+        accountHolder1.setMail("Quim@gmail.com");
+        accountHolder1.setPhone("123456789");
+        accountHolder1.setAddress(new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
+        userRepository.save(accountHolder1);
+
+        AccountHolder accountHolder2 = new AccountHolder();
+        accountHolder2.setName("Anya");
+        accountHolder2.setDateOfBirth(LocalDate.of(1998, 05, 10));
+        accountHolder2.setMail("Anya@gmail.com");
+        accountHolder2.setPhone("987654321");
+        accountHolder2.setAddress(new Address("Calle falsa321", "Cambrils", "43850", "Tarragona", "Spain"));
+        userRepository.save(accountHolder2);
+
+        CheckingAccount checkingAccount1 = new CheckingAccount();
+        checkingAccount1.setPrimaryAccountHolder(accountHolder1);
+        checkingAccount1.setBalance(new Money(BigDecimal.valueOf(1000)));
+        checkingAccount1.setCreationDate(LocalDate.of(2009, 04, 10));
+        checkingAccount1.setLastInterestDay(LocalDate.of(2021, 02, 14));
+        accountRepository.save(checkingAccount1);
+
+        CheckingAccount checkingAccount2 = new CheckingAccount();
+        checkingAccount2.setPrimaryAccountHolder(accountHolder2);
+        checkingAccount2.setBalance(new Money(BigDecimal.valueOf(1000)));
+        checkingAccount2.setCreationDate(LocalDate.of(2004, 04, 10));
+        checkingAccount2.setLastInterestDay(LocalDate.of(2020, 02, 14));
+        accountRepository.save(checkingAccount2);
+
+        Saving saving1 = new Saving();
+        saving1.setBalance(new Money(BigDecimal.valueOf(1000)));
+        saving1.setPrimaryAccountHolder(accountHolder1);
+        saving1.setInterestRate(BigDecimal.valueOf(0.5000));
+        saving1.setCreationDate(LocalDate.of(2009, 03, 10));
+        saving1.setLastInterestDay(LocalDate.of(2022, 05,14));
+        accountRepository.save(saving1);
+
+        Saving saving2 = new Saving();
+        saving2.setBalance(new Money(BigDecimal.valueOf(1000)));
+        saving2.setPrimaryAccountHolder(accountHolder2);
+        saving2.setInterestRate(BigDecimal.valueOf(0.5000));
+        saving2.setCreationDate(LocalDate.of(2002, 03, 10));
+        saving2.setLastInterestDay(LocalDate.of(2019, 05,14));
+        accountRepository.save(saving2);
+
+        CreditCard creditCard1 = new CreditCard();
+        creditCard1.setPrimaryAccountHolder(accountHolder1);
+        creditCard1.setCreationDate(LocalDate.of(2009, 05, 14));
+        creditCard1.setLastInterestDay(LocalDate.of(2020, 12, 15));
+        creditCard1.setCreditLimit(new Money(BigDecimal.valueOf(500L)));
+        creditCard1.setInterestRate(BigDecimal.valueOf(0.15));
+        creditCard1.setBalance(creditCard1.getCreditLimit());
+        accountRepository.save(creditCard1);
+
+        CreditCard creditCard2 = new CreditCard();
+        creditCard2.setPrimaryAccountHolder(accountHolder2);
+        creditCard2.setCreationDate(LocalDate.of(2005, 05, 14));
+        creditCard2.setLastInterestDay(LocalDate.of(2020, 12, 15));
+        creditCard2.setCreditLimit(new Money(BigDecimal.valueOf(500L)));
+        creditCard2.setInterestRate(BigDecimal.valueOf(0.15));
+        creditCard2.setBalance(creditCard2.getCreditLimit());
+        accountRepository.save(creditCard2);
+
+    }
+
+
+    public static void main(String[] args) {
+        SpringApplication.run(BankingProjectApplication.class, args);
+    }
+
+
+    /*
+     * TODO
+     * THIRD PARTY USER, TEST, SECURITY, LOG IN //CAMBIAR TODOS LO MÉTODOS QUE DEVUELVE STRING Y BORRAS LAS LISTAS DE SHOW ACCOUNTS DE TODOS MENOS ADMIN Y ACCHOLDER
+     *
+     * VALIDATION, README, UML
+     * */
+
 
 }

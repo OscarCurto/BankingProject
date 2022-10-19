@@ -43,7 +43,8 @@ public class AccountHolder extends User {
 
     }
 
-    public AccountHolder(String name, String mail, LocalDate dateOfBirth, String phone, Address address, Address mailingAddress, List<Account> primaryAccountHolderList, List<Account> secondaryAccountHolderList) {
+    public AccountHolder(String name, String mail, LocalDate dateOfBirth, String phone, Address address, Address mailingAddress, List<Account> primaryAccountHolderList,
+                         List<Account> secondaryAccountHolderList) {
         super(name);
         this.mail = mail;
         this.dateOfBirth = dateOfBirth;
@@ -52,6 +53,14 @@ public class AccountHolder extends User {
         this.mailingAddress = mailingAddress;
         this.primaryAccountHolderList = primaryAccountHolderList;
         this.secondaryAccountHolderList = secondaryAccountHolderList;
+    }
+
+    public AccountHolder(String name, String mail, LocalDate dateOfBirth, String phone, Address address) {
+        super(name);
+        this.mail = mail;
+        this.dateOfBirth = dateOfBirth;
+        this.phone = phone;
+        this.address = address;
     }
 
     public AccountHolder(String userName, String password) {

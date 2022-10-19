@@ -25,7 +25,7 @@ public class AccountHolderController implements AccountHolderControllerInterface
         return accountHolderServiceInterface.showHolderAccounts(id);
     }
 
-    @PostMapping("holder/createHolderUser")
+    @PostMapping("/holder/createHolderUser")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolder createAccountHolderUser(@RequestBody AccountHolder accountHolder) {
         return accountHolderServiceInterface.createAccountHolderUser(accountHolder);

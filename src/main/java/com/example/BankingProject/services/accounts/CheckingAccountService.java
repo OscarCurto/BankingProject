@@ -1,6 +1,7 @@
 package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
@@ -36,14 +37,14 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
 
 
     //Use this method to create a new Checking Account
-    public Account createCheckingAccount(AccountDTO accountDTO) {
+    public Account createCheckingAccount(CreateAccountDTO createAccountDTO) {
 
-        if (accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).isPresent()) {
-            AccountHolder primaryAccountHolder = accountHolderRepository.findById(accountDTO.getPrimaryAccountHolder()).get();
+        if (accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+            AccountHolder primaryAccountHolder = accountHolderRepository.findById(createAccountDTO.getId()).get();
             AccountHolder secondaryAccountHolder = null;
 
-            if (accountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).isPresent()) {
-                secondaryAccountHolder = accountHolderRepository.findById(accountDTO.getSecondaryAccountHolder()).get();
+            if (createAccountDTO.getSecondaryAccountHolder() != null && accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+                secondaryAccountHolder = accountHolderRepository.findById(createAccountDTO.getId()).get();
             }
 
             Integer age = Period.between(primaryAccountHolder.getDateOfBirth(), LocalDate.now()).getYears();
@@ -51,22 +52,22 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
             StudentCheckingAccount studentCheckingAccount;
             if (age > 24) {
                 CheckingAccount checkingAccount = new CheckingAccount(
-                        accountDTO.getBalance(),
+                        createAccountDTO.getBalance().getAmount(),
                         primaryAccountHolder,
                         secondaryAccountHolder,
-                        accountDTO.getPenaltyFee(),
-                        accountDTO.getCreationDate(),
-                        accountDTO.getStatus()
+                        createAccountDTO.getPenaltyFee(),
+                        createAccountDTO.getCreationDate(),
+                        createAccountDTO.getStatus()
                 );
                 return checkingAccountRepository.save(checkingAccount);
             } else {
                 studentCheckingAccount = new StudentCheckingAccount(
-                        accountDTO.getBalance(),
+                        createAccountDTO.getBalance().getAmount(),
                         primaryAccountHolder,
                         secondaryAccountHolder,
-                        accountDTO.getPenaltyFee(),
-                        accountDTO.getCreationDate(),
-                        accountDTO.getStatus()
+                        createAccountDTO.getPenaltyFee(),
+                        createAccountDTO.getCreationDate(),
+                        createAccountDTO.getStatus()
                 );
             }
             return studentCheckingAccountRepository.save(studentCheckingAccount);

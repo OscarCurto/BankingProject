@@ -1,6 +1,6 @@
 package com.example.BankingProject.services.users;
 
-import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.dtos.*;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.*;
 import com.example.BankingProject.models.users.AccountHolder;
@@ -70,41 +70,41 @@ public class AdminService implements AdminServiceInterface {
     }
 
     //Use this method to register a new account
-    public Account createAccount(AccountDTO accountDTO) {
-        if (!accountHolderRepository.findById(accountDTO.getAccountHolderId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Please select an existing ID." );
+    public Account createAccount(CreateAccountDTO createAccountDTO) {
+        if (!accountHolderRepository.findById(createAccountDTO.getId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Please select an existing ID.");
         }
 
-        AccountHolder accountHolder = accountHolderRepository.findById(accountDTO.getAccountHolderId()).get();
+        AccountHolder account = accountHolderRepository.findById(createAccountDTO.getId()).get();
 
-        switch (accountDTO.getAccountType().trim().toLowerCase()) {
+        switch (createAccountDTO.getAccountType().trim().toLowerCase()) {
             case "checking":
-                return checkingAccountService.createCheckingAccount(accountDTO);
+                return checkingAccountService.createCheckingAccount(createAccountDTO);
             case "saving":
-                return savingService.createSavingAccount(accountDTO);
+                return savingService.createSavingAccount(createAccountDTO);
             case "creditCard":
-                return creditCardService.createCreditCardAccount(accountDTO);
+                return creditCardService.createCreditCardAccount(createAccountDTO);
         }
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Please choose one between Checking, Savings or CreditCard." );
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Please choose one between Checking, Savings or CreditCard.");
     }
 
     //Use this method to create a ThirdPartyUser Account
-    public ThirdPartyUser createThirdPartyUser(ThirdPartyUser thirdPartyUser){
-        return thirdPartyUserRepository.save(thirdPartyUser);
+    public ThirdPartyUser createThirdPartyUser(ThirdPartyDTO thirdPartyDTO) {
+        return thirdPartyUserRepository.save(new ThirdPartyUser(thirdPartyDTO.getName(), thirdPartyDTO.getPassword()));
     }
 
     //Use this method to create an Admin User
-    public Admin createAdminUser(Admin admin){
-        return adminRepository.save(admin);
+    public Admin createAdminUser(AdminDTO adminDTO) {
+        return adminRepository.save(new Admin(adminDTO.getName(), adminDTO.getPassword()));
     }
 
     //Use this method to delete an account
-    public String deleteAccount(Long id) {
+    public void deleteAccount(Long id) {
         if (accountRepository.findById(id).isPresent()) {
             accountRepository.deleteById(id);
-            return "Account  " + id + " deleted";
+
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account" );
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account");
         }
     }
 
@@ -114,22 +114,22 @@ public class AdminService implements AdminServiceInterface {
             Account account = accountRepository.findById(id).get();
             return account.getBalance().getAmount();
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Not an existing account" );
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Not an existing account");
         }
     }
 
     //Use this method to modify the balance of an existing account
-    public Account modifyBalanceAdmin(AccountDTO accountDTO) {
-        Account account = accountRepository.findById(accountDTO.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account" ));
-        account.setBalance(new Money(accountDTO.getAmount()));
+    public Account modifyBalanceAdmin(ModifyBalanceDTO modifyBalanceDTO) {
+        Account account = accountRepository.findById(modifyBalanceDTO.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
+        account.setBalance(new Money(modifyBalanceDTO.getAmount()));
         accountRepository.save(account);
         return account;
     }
 
     //Use this method to modify the status of an existing account
-    public Account modifyStatus(AccountDTO accountDTO) {
-        Account account = accountRepository.findById(accountDTO.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account" ));
-        account.setStatus(accountDTO.getStatus());
+    public Account modifyStatus(StatusDTO statusDTO) {
+        Account account = accountRepository.findById(statusDTO.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
+        account.setStatus(statusDTO.getStatus());
         accountRepository.save(account);
         return account;
     }

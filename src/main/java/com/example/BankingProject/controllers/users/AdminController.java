@@ -1,7 +1,7 @@
 package com.example.BankingProject.controllers.users;
 
 import com.example.BankingProject.controllers.users.interfaces.AdminControllerInterface;
-import com.example.BankingProject.dtos.AccountDTO;
+import com.example.BankingProject.dtos.*;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.users.Admin;
 import com.example.BankingProject.models.users.ThirdPartyUser;
@@ -28,44 +28,44 @@ public class AdminController implements AdminControllerInterface {
 
     @PostMapping("/admin/createAccount")
     @ResponseStatus(HttpStatus.CREATED)
-    public Account createAccount(@RequestBody AccountDTO accountDTO) {
-        return adminServiceInterface.createAccount(accountDTO);
+    public Account createAccount(@RequestBody CreateAccountDTO createAccountDTO) {
+        return adminServiceInterface.createAccount(createAccountDTO);
     }
 
     @PostMapping("/admin/createThirdPartyUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public ThirdPartyUser createThirdPartyUser(@RequestBody ThirdPartyUser thirdPartyUser){
-        return adminServiceInterface.createThirdPartyUser(thirdPartyUser);
+    public ThirdPartyUser createThirdPartyUser(@RequestBody ThirdPartyDTO thirdPartyDTO){
+        return adminServiceInterface.createThirdPartyUser(thirdPartyDTO);
     }
 
     @PostMapping("/admin/createAdminUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public Admin createAdminUser(Admin admin){
-        return adminServiceInterface.createAdminUser(admin);
+    public Admin createAdminUser(@RequestBody AdminDTO adminDTO){
+        return adminServiceInterface.createAdminUser(adminDTO);
     }
 
-    @DeleteMapping("admin/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteAccount(@PathVariable Long id) {
-        return adminServiceInterface.deleteAccount(id);
+    public void deleteAccount(@PathVariable Long id) {
+        adminServiceInterface.deleteAccount(id);
     }
 
-    @GetMapping("/checkAdminBalance")
+    @GetMapping("/checkAdminBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public BigDecimal checkBalanceAdmin(Long id) {
+    public BigDecimal checkBalanceAdmin(@PathVariable Long id) {
         return adminServiceInterface.checkBalanceAdmin(id);
     }
 
     @PatchMapping("/modifyAdminBalance")
     @ResponseStatus(HttpStatus.OK)
-    public Account modifyBalanceAdmin(@RequestBody AccountDTO accountDTO) {
-        return adminServiceInterface.modifyBalanceAdmin(accountDTO);
+    public Account modifyBalanceAdmin(@RequestBody ModifyBalanceDTO modifyBalanceDTO) {
+        return adminServiceInterface.modifyBalanceAdmin(modifyBalanceDTO);
     }
 
     @PatchMapping("/modifyAdminStatus")
     @ResponseStatus(HttpStatus.OK)
-    public Account modifyStatus(@RequestBody AccountDTO accountDTO) {
-        return adminServiceInterface.modifyStatus(accountDTO);
+    public Account modifyStatus(@RequestBody StatusDTO statusDTO) {
+        return adminServiceInterface.modifyStatus(statusDTO);
     }
 
     @GetMapping("/admin/users")
