@@ -7,6 +7,7 @@ import com.example.BankingProject.models.accounts.CreditCard;
 import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.models.users.Admin;
+import com.example.BankingProject.models.users.ThirdPartyUser;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.users.AdminRepository;
 import com.example.BankingProject.repositories.users.UserRepository;
@@ -100,6 +101,11 @@ public class BankingProjectApplication implements CommandLineRunner {
         creditCard2.setBalance(creditCard2.getCreditLimit());
         accountRepository.save(creditCard2);
 
+        ThirdPartyUser thirdPartyUser = new ThirdPartyUser();
+        thirdPartyUser.setName("Sergi");
+        thirdPartyUser.setPassword("4321");
+        userRepository.save(thirdPartyUser);
+
     }
 
 
@@ -110,7 +116,7 @@ public class BankingProjectApplication implements CommandLineRunner {
 
     /*
      * TODO
-     * THIRD PARTY USER, TEST, SECURITY, LOG IN //CAMBIAR TODOS LO MÉTODOS QUE DEVUELVE STRING Y BORRAS LAS LISTAS DE SHOW ACCOUNTS DE TODOS MENOS ADMIN Y ACCHOLDER
+     * SECURITY, LOG IN //CAMBIAR TODOS LO MÉTODOS QUE DEVUELVE STRING Y BORRAS LAS LISTAS DE SHOW ACCOUNTS DE TODOS MENOS ADMIN Y ACCHOLDER
      *
      * VALIDATION, README, UML
      * */
