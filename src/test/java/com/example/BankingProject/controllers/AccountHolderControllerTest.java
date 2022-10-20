@@ -95,7 +95,6 @@ public class AccountHolderControllerTest {
         MvcResult mvcResult = mockMvc.perform(patch("/holderAccount/transfer").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
 
-        System.out.println(mvcResult.getResponse().getContentAsString());
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1000.00"));
     }
 

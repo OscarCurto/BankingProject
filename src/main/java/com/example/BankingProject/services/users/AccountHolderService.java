@@ -3,6 +3,7 @@ package com.example.BankingProject.services.users;
 import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.embedables.Money;
+import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.Saving;
@@ -14,7 +15,6 @@ import com.example.BankingProject.repositories.accounts.CreditCardRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
 import com.example.BankingProject.repositories.transactions.TransactionRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
-import com.example.BankingProject.services.accounts.CheckingAccountService;
 import com.example.BankingProject.services.accounts.CreditCardService;
 import com.example.BankingProject.services.accounts.SavingService;
 import com.example.BankingProject.services.users.interfaces.AccountHolderServiceInterface;
@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.BankingProject.enums.Status.FROZEN;
 
 @Service
 public class AccountHolderService implements AccountHolderServiceInterface {
@@ -42,9 +44,6 @@ public class AccountHolderService implements AccountHolderServiceInterface {
 
     @Autowired
     CheckingAccountRepository checkingAccountRepository;
-
-    @Autowired
-    CheckingAccountService checkingAccountService;
 
     @Autowired
     SavingRepository savingRepository;
@@ -116,19 +115,67 @@ public class AccountHolderService implements AccountHolderServiceInterface {
 
         if (checkingAccountRepository.existsById(transferMoneyDTO.getSenderAccountId())) {
             CheckingAccount checkingSenderAccount = checkingAccountRepository.findById(transferMoneyDTO.getSenderAccountId()).get();
-            return checkingAccountService.transferCheckingAccount(checkingSenderAccount, transferMoneyDTO.getAmount(), receiverAccount, sent, received);
+            return this.transferCheckingAccount(checkingSenderAccount, transferMoneyDTO.getAmount(), receiverAccount, sent, received);
         } else if (savingRepository.existsById(transferMoneyDTO.getSenderAccountId())) {
             Saving savinSenderAccount = savingRepository.findById(transferMoneyDTO.getSenderAccountId()).get();
-            return savingService.transferSaving(savinSenderAccount, transferMoneyDTO.getAmount(), receiverAccount, sent, received);
+            return this.transferSaving(savinSenderAccount, transferMoneyDTO.getAmount(), receiverAccount, sent, received);
         } else {
             senderAccount.setBalance(sent);
             receiverAccount.setBalance(received);
             Transaction creditCardTransaction = new Transaction("Credit card", senderAccount.getPrimaryAccountHolder().getId(),
-                    receiverAccount.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(100), LocalDateTime.now());
-            transactionRepository.save(creditCardTransaction);
+                    receiverAccount.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(100), LocalDateTime.now(), senderAccount);
             accountRepository.save(senderAccount);
             accountRepository.save(receiverAccount);
+            this.fraudDetection(creditCardTransaction);
+            transactionRepository.save(creditCardTransaction);
             return senderAccount.getBalance().getAmount();
+        }
+    }
+
+    //Use this method to transfer money from a Checking account
+    public BigDecimal transferCheckingAccount(CheckingAccount checkingSender, BigDecimal transfer, Account accountReceiver, Money sent, Money received) {
+        if (checkingSender.getBalance().getAmount().compareTo(checkingSender.getMinimumBalance().getAmount()) < 0) {
+            sent.decreaseAmount(checkingSender.getPenaltyFee().getAmount());
+        }
+
+        checkingSender.setBalance(sent);
+        accountReceiver.setBalance(received);
+        checkingAccountRepository.save(checkingSender);
+        Transaction checkingTransaction = new Transaction("Checking", checkingSender.getPrimaryAccountHolder().getId(),
+                accountReceiver.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(20), LocalDateTime.now(), checkingSender);
+        accountRepository.save(accountReceiver);
+        this.fraudDetection(checkingTransaction);
+        transactionRepository.save(checkingTransaction);
+        return checkingSender.getBalance().getAmount();
+    }
+
+    //Use this method to transfer money from a Saving account
+    public BigDecimal transferSaving(Saving savingSender, BigDecimal transfer, Account accountReceiver, Money sent, Money received) {
+        if (savingSender.getBalance().getAmount().compareTo(savingSender.getMinBalance().getAmount()) < 0) {
+            sent.decreaseAmount(savingSender.getPenaltyFee().getAmount());
+        }
+
+        savingSender.setBalance(sent);
+        accountReceiver.setBalance(received);
+        savingRepository.save(savingSender);
+        Transaction savingTransaction = new Transaction("Saving", savingSender.getPrimaryAccountHolder().getId(),
+                accountReceiver.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(50), LocalDateTime.now(), savingSender);
+        accountRepository.save(accountReceiver);
+        this.fraudDetection(savingTransaction);
+        transactionRepository.save(savingTransaction);
+        return savingSender.getBalance().getAmount();
+    }
+
+    public void fraudDetection(Transaction transaction) {
+        Account account = transaction.getAccount();
+
+        List<Transaction> transactions = transactionRepository.findByAccount(account);
+        for (Transaction transfer : transactions) {
+            if (transfer.getDateTransaction().isAfter(transaction.getDateTransaction().minusSeconds(1))) {
+                account.setStatus(Status.ACTIVE);
+                accountRepository.save(account);
+                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Fraud detected, your account is frozen now");
+            }
         }
     }
 }

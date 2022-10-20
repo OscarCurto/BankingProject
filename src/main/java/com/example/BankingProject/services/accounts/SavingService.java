@@ -11,7 +11,9 @@ import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
 import com.example.BankingProject.repositories.transactions.TransactionRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
+import com.example.BankingProject.security.SecurityConfiguration;
 import com.example.BankingProject.services.accounts.interfaces.SavingServiceInterface;
+import com.example.BankingProject.services.users.AccountHolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +30,6 @@ public class SavingService implements SavingServiceInterface {
 
     @Autowired
     AccountHolderRepository accountHolderRepository;
-
-    @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    TransactionRepository transactionRepository;
 
     //Use this method to create a new Saving Account
     public Saving createSavingAccount(CreateAccountDTO createAccountDTO) {
@@ -59,21 +55,6 @@ public class SavingService implements SavingServiceInterface {
             return savingRepository.save(saving);
         }
         throw new IllegalArgumentException("Primary Holder does not exist");
-    }
-
-    public BigDecimal transferSaving(Saving savingSender, BigDecimal transfer, Account accountReceiver, Money sent, Money received) {
-        if (savingSender.getBalance().getAmount().compareTo(savingSender.getMinBalance().getAmount()) < 0) {
-            sent.decreaseAmount(savingSender.getPenaltyFee().getAmount());
-        }
-
-        savingSender.setBalance(sent);
-        accountReceiver.setBalance(received);
-        savingRepository.save(savingSender);
-        Transaction savingTransaction = new Transaction("Saving", savingSender.getPrimaryAccountHolder().getId(),
-                accountReceiver.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(50), LocalDateTime.now());
-        transactionRepository.save(savingTransaction);
-        accountRepository.save(accountReceiver);
-        return savingSender.getBalance().getAmount();
     }
 
     public Money interestRateSaving(Long id) {
