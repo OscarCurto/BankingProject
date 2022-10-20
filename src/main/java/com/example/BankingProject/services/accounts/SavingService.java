@@ -5,9 +5,11 @@ import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.Saving;
+import com.example.BankingProject.models.transactions.Transaction;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
+import com.example.BankingProject.repositories.transactions.TransactionRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
 import com.example.BankingProject.services.accounts.interfaces.SavingServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
 @Service
@@ -28,6 +31,9 @@ public class SavingService implements SavingServiceInterface {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
     //Use this method to create a new Saving Account
     public Saving createSavingAccount(CreateAccountDTO createAccountDTO) {
@@ -63,6 +69,9 @@ public class SavingService implements SavingServiceInterface {
         savingSender.setBalance(sent);
         accountReceiver.setBalance(received);
         savingRepository.save(savingSender);
+        Transaction savingTransaction = new Transaction("Saving", savingSender.getPrimaryAccountHolder().getId(),
+                accountReceiver.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(50), LocalDateTime.now());
+        transactionRepository.save(savingTransaction);
         accountRepository.save(accountReceiver);
         return savingSender.getBalance().getAmount();
     }

@@ -6,11 +6,13 @@ import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.Saving;
+import com.example.BankingProject.models.transactions.Transaction;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.CheckingAccountRepository;
 import com.example.BankingProject.repositories.accounts.CreditCardRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
+import com.example.BankingProject.repositories.transactions.TransactionRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
 import com.example.BankingProject.services.accounts.CheckingAccountService;
 import com.example.BankingProject.services.accounts.CreditCardService;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +55,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     @Autowired
     CreditCardService creditCardService;
 
+    @Autowired
+    TransactionRepository transactionRepository;
+
     /*
      * Show all Account Holder accounts
      * Create a new AccountHolderUser
-     * LOGIN TODO
      * Check own balance
      * Transfer Money
      * */
@@ -118,6 +123,9 @@ public class AccountHolderService implements AccountHolderServiceInterface {
         } else {
             senderAccount.setBalance(sent);
             receiverAccount.setBalance(received);
+            Transaction creditCardTransaction = new Transaction("Credit card", senderAccount.getPrimaryAccountHolder().getId(),
+                    receiverAccount.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(100), LocalDateTime.now());
+            transactionRepository.save(creditCardTransaction);
             accountRepository.save(senderAccount);
             accountRepository.save(receiverAccount);
             return senderAccount.getBalance().getAmount();

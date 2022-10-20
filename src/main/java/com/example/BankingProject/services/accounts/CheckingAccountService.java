@@ -6,10 +6,12 @@ import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.StudentCheckingAccount;
+import com.example.BankingProject.models.transactions.Transaction;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.CheckingAccountRepository;
 import com.example.BankingProject.repositories.accounts.StudentCheckingAccountRepository;
+import com.example.BankingProject.repositories.transactions.TransactionRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
 import com.example.BankingProject.services.accounts.interfaces.CheckingAccountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
 
@@ -34,6 +37,9 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
 
     //Use this method to create a new Checking Account
@@ -83,6 +89,9 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
         checkingSender.setBalance(sent);
         accountReceiver.setBalance(received);
         checkingAccountRepository.save(checkingSender);
+        Transaction checkingTransaction = new Transaction("Checking", checkingSender.getPrimaryAccountHolder().getId(),
+                accountReceiver.getPrimaryAccountHolder().getId(), BigDecimal.valueOf(20), LocalDateTime.now());
+        transactionRepository.save(checkingTransaction);
         accountRepository.save(accountReceiver);
         return checkingSender.getBalance().getAmount();
     }
