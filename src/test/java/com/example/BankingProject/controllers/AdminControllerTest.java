@@ -1,6 +1,7 @@
 package com.example.BankingProject.controllers;
 
 import com.example.BankingProject.dtos.*;
+import com.example.BankingProject.embedables.Address;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -37,6 +39,9 @@ public class AdminControllerTest {
     //System.out.println(mvcResult.getResponse().getContentAsString());
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     private MockMvc mockMvc;
 
@@ -68,8 +73,10 @@ public class AdminControllerTest {
     @Test
     @DisplayName("Create a new account")
     void createAccount_works() throws Exception {
-        AccountHolder primaryAccountHolder = new AccountHolder();
-        AccountHolder secondaryAccountHolder = new AccountHolder();
+        AccountHolder primaryAccountHolder = new AccountHolder("Asaf", passwordEncoder.encode("asafPssword"), "quim@gmail.com", LocalDate.of(2008, 05, 10),
+                "123456789", new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
+        AccountHolder secondaryAccountHolder = new AccountHolder("Max", passwordEncoder.encode("maxPassword"), "quim@gmail.com", LocalDate.of(2008, 05, 10),
+                "123456789", new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
         CreateAccountDTO createAccountDTO = new CreateAccountDTO(2L, new Money(BigDecimal.valueOf(1000.00)), primaryAccountHolder, secondaryAccountHolder, Status.FROZEN,
                 new Money(BigDecimal.valueOf(1000)), BigDecimal.valueOf(0.0025), LocalDate.of(2021, 04, 10), "Saving");
         String body = objectMapper.writeValueAsString(createAccountDTO);
@@ -83,25 +90,25 @@ public class AdminControllerTest {
     @Test
     @DisplayName("Create a ThirdPartyUser")
     void createThirdPartyUser_works() throws Exception {
-        ThirdPartyDTO thirdPartyDTO = new ThirdPartyDTO("Quim", "1234");
+        ThirdPartyDTO thirdPartyDTO = new ThirdPartyDTO("Pedro", passwordEncoder.encode("1234"), "hashedQuim");
         String body = objectMapper.writeValueAsString(thirdPartyDTO);
         System.out.println(body);
 
         MvcResult mvcResult = mockMvc.perform(post("/admin/createThirdPartyUser").
                 content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("1234"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("hashedQuim"));
     }
 
     @Test
     @DisplayName("Create an Admin")
     void createAdmin_works() throws Exception {
-        AdminDTO adminDTO = new AdminDTO("Oscar", "1234");
+        AdminDTO adminDTO = new AdminDTO("Piero", passwordEncoder.encode("5555"));
         String body = objectMapper.writeValueAsString(adminDTO);
         System.out.println(body);
 
         MvcResult mvcResult = mockMvc.perform(post("/admin/createAdminUser").
                 content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Oscar"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Piero"));
     }
 
     @Test

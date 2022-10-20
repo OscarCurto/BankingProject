@@ -16,7 +16,7 @@ public class ThirdPartyUserController implements ThirdPartyUserControllerInterfa
 
     @PatchMapping("/thirdPartyTransfer")
     @ResponseStatus(HttpStatus.OK)
-    public Money transferThirdParty(@RequestBody TransferMoneyDTO transferMoneyDTO, @RequestHeader String password) {
-        return thirdPartyUserServiceInterface.transferThirdParty(transferMoneyDTO, password);
+    public Money transferThirdParty(@RequestBody TransferMoneyDTO transferMoneyDTO, @RequestHeader String hashedKey) {
+        return thirdPartyUserServiceInterface.transferThirdParty(transferMoneyDTO, hashedKey);
     }
 }

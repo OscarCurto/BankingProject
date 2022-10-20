@@ -22,10 +22,10 @@ public class ThirdPartyUserService implements ThirdPartyUserServiceInterface {
     @Autowired
     AccountRepository accountRepository;
 
-    public Money transferThirdParty(TransferMoneyDTO transferMoneyDTO, String password) {
+    public Money transferThirdParty(TransferMoneyDTO transferMoneyDTO, String hashedKey) {
         Account account1 = accountRepository.findById(transferMoneyDTO.getSenderAccountId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not an existing account"));
-        if (!thirdPartyUserRepository.findByPassword(password).isPresent()) {
+        if (!thirdPartyUserRepository.findByHashedKey(hashedKey).isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Not available");
         }
         Account account2 = accountRepository.findById(transferMoneyDTO.getReceiverAccountId())

@@ -43,6 +43,10 @@ public class Saving extends Account{
         //Money balance, ah1, ah2, bigdecimal penaltyfee, ld creationDate, status status, money minBal, bigDeciaml interestRate
     }
 
+    //ESTE
+    public Saving(Money balance, AccountHolder primaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate) {
+    }
+
     public Money getMinBalance() {
         return minBalance;
     }

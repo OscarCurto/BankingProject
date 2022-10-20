@@ -5,5 +5,5 @@ import com.example.BankingProject.embedables.Money;
 
 public interface ThirdPartyUserControllerInterface {
 
-    Money transferThirdParty(TransferMoneyDTO transferMoneyDTO, String password);
+    Money transferThirdParty(TransferMoneyDTO transferMoneyDTO, String hashedKey);
 }

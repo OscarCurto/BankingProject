@@ -5,20 +5,18 @@ import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.CreditCard;
 import com.example.BankingProject.models.accounts.Saving;
-import com.example.BankingProject.models.users.AccountHolder;
-import com.example.BankingProject.models.users.Admin;
-import com.example.BankingProject.models.users.ThirdPartyUser;
+import com.example.BankingProject.models.users.*;
 import com.example.BankingProject.repositories.accounts.AccountRepository;
-import com.example.BankingProject.repositories.users.AdminRepository;
+import com.example.BankingProject.repositories.users.RoleRepository;
 import com.example.BankingProject.repositories.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @SpringBootApplication
 public class BankingProjectApplication implements CommandLineRunner {
@@ -30,28 +28,36 @@ public class BankingProjectApplication implements CommandLineRunner {
     AccountRepository accountRepository;
 
     @Autowired
-    AdminRepository adminRepository;
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        Admin admin = new Admin("Oscar", "1234");
+        Admin admin = new Admin("Oscar", passwordEncoder.encode("oscar1234"));
         userRepository.save(admin);
+        roleRepository.save(new Role("ADMIN",admin));
 
         AccountHolder accountHolder1 = new AccountHolder();
         accountHolder1.setName("Quim");
+        accountHolder1.setPassword(passwordEncoder.encode("quimPassword1"));
         accountHolder1.setDateOfBirth(LocalDate.of(2008, 05, 10));
         accountHolder1.setMail("Quim@gmail.com");
         accountHolder1.setPhone("123456789");
         accountHolder1.setAddress(new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
         userRepository.save(accountHolder1);
+        roleRepository.save(new Role("USER", accountHolder1));
 
         AccountHolder accountHolder2 = new AccountHolder();
         accountHolder2.setName("Anya");
+        accountHolder2.setPassword(passwordEncoder.encode("anyaPassword2"));
         accountHolder2.setDateOfBirth(LocalDate.of(1998, 05, 10));
         accountHolder2.setMail("Anya@gmail.com");
         accountHolder2.setPhone("987654321");
         accountHolder2.setAddress(new Address("Calle falsa321", "Cambrils", "43850", "Tarragona", "Spain"));
         userRepository.save(accountHolder2);
+        roleRepository.save(new Role("USER", accountHolder2));
 
         CheckingAccount checkingAccount1 = new CheckingAccount();
         checkingAccount1.setPrimaryAccountHolder(accountHolder1);
@@ -103,9 +109,9 @@ public class BankingProjectApplication implements CommandLineRunner {
 
         ThirdPartyUser thirdPartyUser = new ThirdPartyUser();
         thirdPartyUser.setName("Sergi");
-        thirdPartyUser.setPassword("4321");
+        thirdPartyUser.setPassword((passwordEncoder.encode("sergiPassword")));
+        thirdPartyUser.setHashedKey("4321");
         userRepository.save(thirdPartyUser);
-
     }
 
 

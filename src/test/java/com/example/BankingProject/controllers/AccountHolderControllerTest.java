@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -32,6 +33,9 @@ public class AccountHolderControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     private MockMvc mockMvc;
 
@@ -59,14 +63,14 @@ public class AccountHolderControllerTest {
     @Test
     @DisplayName("Testing if create Holder Accounts works")
     void create_HolderAccount_works() throws Exception {
-        AccountHolder accountHolder1 = new AccountHolder("Quim", "quim@gmail.com", LocalDate.of(2008, 05, 10),
+        AccountHolder accountHolder1 = new AccountHolder("Antonio", passwordEncoder.encode("quimPassword"), "quim@gmail.com", LocalDate.of(2008, 05, 10),
                 "123456789", new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
         String body = objectMapper.writeValueAsString(accountHolder1);
         System.out.println(body);
 
         MvcResult mvcResult = mockMvc.perform(post("/holder/createHolderUser").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Quim"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Antonio"));
     }
 
     @Test

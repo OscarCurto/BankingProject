@@ -3,21 +3,16 @@ package com.example.BankingProject.services.users;
 import com.example.BankingProject.dtos.*;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.*;
-import com.example.BankingProject.models.users.AccountHolder;
-import com.example.BankingProject.models.users.Admin;
-import com.example.BankingProject.models.users.ThirdPartyUser;
-import com.example.BankingProject.models.users.User;
+import com.example.BankingProject.models.users.*;
 import com.example.BankingProject.repositories.accounts.*;
-import com.example.BankingProject.repositories.users.AccountHolderRepository;
-import com.example.BankingProject.repositories.users.AdminRepository;
-import com.example.BankingProject.repositories.users.ThirdPartyUserRepository;
-import com.example.BankingProject.repositories.users.UserRepository;
+import com.example.BankingProject.repositories.users.*;
 import com.example.BankingProject.services.accounts.CheckingAccountService;
 import com.example.BankingProject.services.accounts.CreditCardService;
 import com.example.BankingProject.services.accounts.SavingService;
 import com.example.BankingProject.services.users.interfaces.AdminServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -50,6 +45,12 @@ public class AdminService implements AdminServiceInterface {
 
     @Autowired
     ThirdPartyUserRepository thirdPartyUserRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /*
      * Show accounts
@@ -90,12 +91,15 @@ public class AdminService implements AdminServiceInterface {
 
     //Use this method to create a ThirdPartyUser Account
     public ThirdPartyUser createThirdPartyUser(ThirdPartyDTO thirdPartyDTO) {
-        return thirdPartyUserRepository.save(new ThirdPartyUser(thirdPartyDTO.getName(), thirdPartyDTO.getPassword()));
+        return thirdPartyUserRepository.save(new ThirdPartyUser(thirdPartyDTO.getName(), thirdPartyDTO.getPassword(), thirdPartyDTO.getHashedKey()));
     }
 
     //Use this method to create an Admin User
     public Admin createAdminUser(AdminDTO adminDTO) {
-        return adminRepository.save(new Admin(adminDTO.getName(), adminDTO.getPassword()));
+        Admin admin = new Admin(adminDTO.getName(), passwordEncoder.encode(adminDTO.getPassword()));
+        userRepository.save(admin);
+        roleRepository.save(new Role("ADMIN", admin));
+        return admin;
     }
 
     //Use this method to delete an account
