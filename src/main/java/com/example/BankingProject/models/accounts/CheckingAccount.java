@@ -37,10 +37,6 @@ public class CheckingAccount extends Account {
     public CheckingAccount(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status) {
     }
 
-    //ESTE
-    public CheckingAccount(BigDecimal amount, AccountHolder primaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status) {
-    }
-
     public Money getMinimumBalance() {
         return minimumBalance;
     }

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-public class Saving extends Account{
+public class Saving extends Account {
 
     @Embedded
     private Money minBalance = new Money(BigDecimal.valueOf(1000L));
@@ -40,12 +40,8 @@ public class Saving extends Account{
 
     public Saving(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee,
                   LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate) {
-        //Money balance, ah1, ah2, bigdecimal penaltyfee, ld creationDate, status status, money minBal, bigDeciaml interestRate
     }
 
-    //ESTE
-    public Saving(Money balance, AccountHolder primaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate) {
-    }
 
     public Money getMinBalance() {
         return minBalance;

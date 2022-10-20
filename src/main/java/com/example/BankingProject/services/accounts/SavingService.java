@@ -1,6 +1,5 @@
 package com.example.BankingProject.services.accounts;
 
-import com.example.BankingProject.dtos.AccountDTO;
 import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.models.accounts.Account;

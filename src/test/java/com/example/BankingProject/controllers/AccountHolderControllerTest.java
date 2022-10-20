@@ -1,6 +1,5 @@
 package com.example.BankingProject.controllers;
 
-import com.example.BankingProject.dtos.AccountHolderDTO;
 import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.embedables.Address;

@@ -39,10 +39,6 @@ public class CreditCard extends Account{
     public CreditCard(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate, LocalDate creationDate, LocalDate lastAddedInterestRate) {
     }
 
-    //ESTE
-    public CreditCard(Money balance, AccountHolder primaryAccountHolder, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate, LocalDate creationDate, LocalDate lastAddedInterestRate) {
-    }
-
     public Money getCreditLimit() {
         return creditLimit;
     }
