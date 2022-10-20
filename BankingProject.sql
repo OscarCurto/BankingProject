@@ -1,3 +1,3 @@
-drop schema if exists BankingProject2;
-create schema BankingProject2;
-use BankingProject2;
+drop schema if exists BankingProject;
+create schema BankingProject;
+use BankingProject;

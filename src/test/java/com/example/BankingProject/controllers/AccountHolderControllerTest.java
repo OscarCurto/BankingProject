@@ -56,7 +56,7 @@ public class AccountHolderControllerTest {
     @Test
     @DisplayName("Testing if show holder accounts by id works")
     void show_HoldersAccountsById_works() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/holderAccount/2")).andExpect(status().isAccepted()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/holderAccount/showAccounts/2")).andExpect(status().isAccepted()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
     }
 
@@ -68,7 +68,7 @@ public class AccountHolderControllerTest {
         String body = objectMapper.writeValueAsString(accountHolder1);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(post("/holder/createHolderUser").content(body)
+        MvcResult mvcResult = mockMvc.perform(post("/holderAccount/createUser").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Antonio"));
     }
@@ -80,7 +80,7 @@ public class AccountHolderControllerTest {
         String body = objectMapper.writeValueAsString(checkOwnBalanceDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(get("/checkHolderBalance").content(body)
+        MvcResult mvcResult = mockMvc.perform(get("/holderAccount/checkBalance").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isAccepted()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1000.00"));
     }
@@ -92,7 +92,7 @@ public class AccountHolderControllerTest {
         String body = objectMapper.writeValueAsString(transferMoneyDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/transferHolder").content(body).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(patch("/holderAccount/transfer").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
 
         System.out.println(mvcResult.getResponse().getContentAsString());

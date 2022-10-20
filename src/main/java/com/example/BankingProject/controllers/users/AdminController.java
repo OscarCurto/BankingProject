@@ -20,25 +20,25 @@ public class AdminController implements AdminControllerInterface {
     @Autowired
     AdminServiceInterface adminServiceInterface;
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/showAccounts")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Account> showAccounts() {
         return adminServiceInterface.showAccounts();
     }
 
-    @PostMapping("/admin/createAccount")
+    @PostMapping("/admin/createHolder")
     @ResponseStatus(HttpStatus.CREATED)
     public Account createAccount(@RequestBody CreateAccountDTO createAccountDTO) {
         return adminServiceInterface.createAccount(createAccountDTO);
     }
 
-    @PostMapping("/admin/createThirdPartyUser")
+    @PostMapping("/admin/createThirdParty")
     @ResponseStatus(HttpStatus.CREATED)
     public ThirdPartyUser createThirdPartyUser(@RequestBody ThirdPartyDTO thirdPartyDTO){
         return adminServiceInterface.createThirdPartyUser(thirdPartyDTO);
     }
 
-    @PostMapping("/admin/createAdminUser")
+    @PostMapping("/admin/createAdmin")
     @ResponseStatus(HttpStatus.CREATED)
     public Admin createAdminUser(@RequestBody AdminDTO adminDTO){
         return adminServiceInterface.createAdminUser(adminDTO);
@@ -50,25 +50,25 @@ public class AdminController implements AdminControllerInterface {
         adminServiceInterface.deleteAccount(id);
     }
 
-    @GetMapping("/checkAdminBalance/{id}")
+    @GetMapping("/admin/checkBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BigDecimal checkBalanceAdmin(@PathVariable Long id) {
         return adminServiceInterface.checkBalanceAdmin(id);
     }
 
-    @PatchMapping("/modifyAdminBalance")
+    @PatchMapping("/admin/modifyBalance")
     @ResponseStatus(HttpStatus.OK)
     public Account modifyBalanceAdmin(@RequestBody ModifyBalanceDTO modifyBalanceDTO) {
         return adminServiceInterface.modifyBalanceAdmin(modifyBalanceDTO);
     }
 
-    @PatchMapping("/modifyAdminStatus")
+    @PatchMapping("/admin/modifyStatus")
     @ResponseStatus(HttpStatus.OK)
     public Account modifyStatus(@RequestBody StatusDTO statusDTO) {
         return adminServiceInterface.modifyStatus(statusDTO);
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/admin/showUsers")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<User> getAllUsers() {
         return adminServiceInterface.getAllUsers();

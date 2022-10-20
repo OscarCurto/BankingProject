@@ -42,7 +42,7 @@ public class ThirdPartyUserControllerTest {
         String body = objectMapper.writeValueAsString(transferMoneyDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/thirdPartyTransfer").header("hashedKey", "4321")
+        MvcResult mvcResult = mockMvc.perform(patch("/thirdParty/transfer").header("hashedKey", "4321")
                 .content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("850.00"));
     }

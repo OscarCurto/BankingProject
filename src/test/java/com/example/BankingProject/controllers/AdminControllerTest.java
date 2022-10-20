@@ -66,7 +66,7 @@ public class AdminControllerTest {
     @Test
     @DisplayName("Show all accounts in the app")
     void showAllAccounts_works() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/admin")).andExpect(status().isAccepted()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/admin/showAccounts")).andExpect(status().isAccepted()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Quim"));
     }
 
@@ -82,7 +82,7 @@ public class AdminControllerTest {
         String body = objectMapper.writeValueAsString(createAccountDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(post("/admin/createAccount").content(body)
+        MvcResult mvcResult = mockMvc.perform(post("/admin/createHolder").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("40.00"));
     }
@@ -94,7 +94,7 @@ public class AdminControllerTest {
         String body = objectMapper.writeValueAsString(thirdPartyDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(post("/admin/createThirdPartyUser").
+        MvcResult mvcResult = mockMvc.perform(post("/admin/createThirdParty").
                 content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("hashedQuim"));
     }
@@ -106,7 +106,7 @@ public class AdminControllerTest {
         String body = objectMapper.writeValueAsString(adminDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(post("/admin/createAdminUser").
+        MvcResult mvcResult = mockMvc.perform(post("/admin/createAdmin").
                 content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Piero"));
     }
@@ -121,7 +121,7 @@ public class AdminControllerTest {
     @Test
     @DisplayName("Check balance of all the accounts in the app")
     void checkAllBalanceById_works() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/checkAdminBalance/2")).andExpect(status().isAccepted()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/admin/checkBalance/2")).andExpect(status().isAccepted()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1000.00"));
     }
 
@@ -132,7 +132,7 @@ public class AdminControllerTest {
         String body = objectMapper.writeValueAsString(modifyBalanceDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/modifyAdminBalance").content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalance").content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1000.00"));
     }
 
@@ -143,14 +143,14 @@ public class AdminControllerTest {
         String body = objectMapper.writeValueAsString(statusDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/modifyAdminStatus").content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyStatus").content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("FROZEN"));
     }
 
     @Test
     @DisplayName("Show all users in the app")
     void showAllUsers() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/admin/users")).andExpect(status().isAccepted()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/admin/showUsers")).andExpect(status().isAccepted()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Quim"));
     }
 }

@@ -19,25 +19,25 @@ public class AccountHolderController implements AccountHolderControllerInterface
     @Autowired
     AccountHolderServiceInterface accountHolderServiceInterface;
 
-    @GetMapping("/holderAccount/{id}")
+    @GetMapping("/holderAccount/showAccounts/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Account> showHolderAccounts(@PathVariable Long id) {
         return accountHolderServiceInterface.showHolderAccounts(id);
     }
 
-    @PostMapping("/holder/createHolderUser")
+    @PostMapping("/holderAccount/createUser")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolder createAccountHolderUser(@RequestBody AccountHolder accountHolder) {
         return accountHolderServiceInterface.createAccountHolderUser(accountHolder);
     }
 
-    @GetMapping("/checkHolderBalance")
+    @GetMapping("/holderAccount/checkBalance")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BigDecimal checkBalanceUser(@RequestBody CheckOwnBalanceDTO checkOwnBalanceDTO) {
         return accountHolderServiceInterface.checkBalanceUser(checkOwnBalanceDTO);
     }
 
-    @PatchMapping("/transferHolder")
+    @PatchMapping("/holderAccount/transfer")
     @ResponseStatus(HttpStatus.OK)
     public BigDecimal transferMoney(@RequestBody TransferMoneyDTO transferMoneyDTO) {
         return accountHolderServiceInterface.transferMoney(transferMoneyDTO);

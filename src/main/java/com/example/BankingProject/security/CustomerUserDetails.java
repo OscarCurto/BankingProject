@@ -5,7 +5,6 @@ import com.example.BankingProject.models.users.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,14 +16,6 @@ public class CustomerUserDetails implements UserDetails {
     public CustomerUserDetails(User user) {
         this.user = user;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

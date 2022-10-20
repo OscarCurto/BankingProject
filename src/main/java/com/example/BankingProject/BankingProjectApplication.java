@@ -119,6 +119,6 @@ public class BankingProjectApplication implements CommandLineRunner {
         SpringApplication.run(BankingProjectApplication.class, args);
     }
 
-    //TODO SECURITY, LOG IN, TRANSACTION, VALIDATIONS Y SETTERS DE MODELS, CAMBIAR LOS MÉTODOS STRING A OTRO TIPO, README, UMLS, LIMPIAR
+    //TODO LOG IN, TRANSACTION, VALIDATIONS Y SETTERS DE MODELS, CAMBIAR LOS MÉTODOS STRING A OTRO TIPO, README, UMLS, LIMPIAR
 
 }

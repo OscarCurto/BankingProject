@@ -34,10 +34,17 @@ public class SecurityConfiguration {
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic();
 
-        //RUTAS DE LOS CONTROLLERS
         httpSecurity.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/user").hasAnyRole("USER")
                 .mvcMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/admin/**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.PUT, "/admin/**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.PATCH, "/admin/**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.DELETE, "/admin/**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.GET, "/holderAccount/**").hasRole("USER")
+                .mvcMatchers(HttpMethod.POST, "/holderAccount/**").hasRole("USER")
+                .mvcMatchers(HttpMethod.PUT, "/holderAccount/**").hasRole("USER")
+                .mvcMatchers(HttpMethod.PATCH, "/holderAccount/**").hasRole("USER")
+                .mvcMatchers(HttpMethod.PATCH, "/thirdParty/**").hasRole("USER")
                 .anyRequest().permitAll();
 
         httpSecurity.csrf().disable();
