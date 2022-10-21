@@ -2,6 +2,7 @@ package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
+import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.transactions.Transaction;
@@ -46,7 +47,7 @@ public class SavingService implements SavingServiceInterface {
                     secondaryAccountHolder,
                     createAccountDTO.getPenaltyFee(),
                     createAccountDTO.getCreationDate(),
-                    createAccountDTO.getStatus(),
+                    Status.valueOf(createAccountDTO.getStatus()),
                     new Money(createAccountDTO.getMinBalance()),
                     createAccountDTO.getInterestRate()
 

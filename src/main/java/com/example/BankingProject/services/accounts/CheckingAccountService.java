@@ -2,6 +2,7 @@ package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
+import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.StudentCheckingAccount;
@@ -55,7 +56,7 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
                         secondaryAccountHolder,
                         createAccountDTO.getPenaltyFee(),
                         createAccountDTO.getCreationDate(),
-                        createAccountDTO.getStatus()
+                        Status.valueOf(createAccountDTO.getStatus())
                 );
                 return checkingAccountRepository.save(checkingAccount);
             } else {
@@ -65,7 +66,7 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
                         secondaryAccountHolder,
                         createAccountDTO.getPenaltyFee(),
                         createAccountDTO.getCreationDate(),
-                        createAccountDTO.getStatus()
+                        Status.valueOf(createAccountDTO.getStatus())
                 );
             }
             return studentCheckingAccountRepository.save(studentCheckingAccount);

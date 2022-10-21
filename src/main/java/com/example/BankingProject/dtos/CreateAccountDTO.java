@@ -17,7 +17,7 @@ public class CreateAccountDTO {
     private Money balance;
     private AccountHolder primaryAccountHolder;
     private AccountHolder secondaryAccountHolder;
-    private Status status;
+    private String status;
     @DecimalMin(value = "100")
     private BigDecimal minBalance;
     @DecimalMax(value = "0.5")
@@ -30,7 +30,7 @@ public class CreateAccountDTO {
     private BigDecimal creditLimit;
     private LocalDate lastAddedInterestRate;
 
-    public CreateAccountDTO(Long id, Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, Status status,
+    public CreateAccountDTO(Long id, Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, String status,
                             BigDecimal minBalance, BigDecimal interestRate, LocalDate lastInterestDay, String accountType) {
         this.id = id;
         this.balance = balance;
@@ -75,11 +75,11 @@ public class CreateAccountDTO {
         this.secondaryAccountHolder = secondaryAccountHolder;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

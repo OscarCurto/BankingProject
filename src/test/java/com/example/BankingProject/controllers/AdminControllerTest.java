@@ -77,7 +77,7 @@ public class AdminControllerTest {
                 "123456789", new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
         AccountHolder secondaryAccountHolder = new AccountHolder("Max", passwordEncoder.encode("maxPassword"), "quim@gmail.com", LocalDate.of(2008, 05, 10),
                 "123456789", new Address("Calle falsa123", "Cambrils", "43850", "Tarragona", "Spain"));
-        CreateAccountDTO createAccountDTO = new CreateAccountDTO(2L, new Money(BigDecimal.valueOf(1000.00)), primaryAccountHolder, secondaryAccountHolder, Status.FROZEN,
+        CreateAccountDTO createAccountDTO = new CreateAccountDTO(2L, new Money(BigDecimal.valueOf(1000.00)), primaryAccountHolder, secondaryAccountHolder, "FROZEN",
                 (BigDecimal.valueOf(1000)), BigDecimal.valueOf(0.0025), LocalDate.of(2021, 04, 10), "Saving");
         String body = objectMapper.writeValueAsString(createAccountDTO);
         System.out.println(body);
