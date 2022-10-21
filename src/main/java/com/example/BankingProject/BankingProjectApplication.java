@@ -34,7 +34,7 @@ public class BankingProjectApplication implements CommandLineRunner {
     RoleRepository roleRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Admin admin = new Admin("Oscar", passwordEncoder.encode("oscar1234"));
         userRepository.save(admin);
         roleRepository.save(new Role("ADMIN",admin));

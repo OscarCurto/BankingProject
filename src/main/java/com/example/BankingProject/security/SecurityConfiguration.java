@@ -1,11 +1,5 @@
 package com.example.BankingProject.security;
 
-import com.example.BankingProject.models.accounts.Account;
-import com.example.BankingProject.models.transactions.Transaction;
-import com.example.BankingProject.repositories.accounts.AccountRepository;
-import com.example.BankingProject.repositories.accounts.SavingRepository;
-import com.example.BankingProject.repositories.transactions.TransactionRepository;
-import com.example.BankingProject.services.accounts.SavingService;
 import com.example.BankingProject.services.users.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

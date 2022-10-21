@@ -23,25 +23,10 @@ public class Saving extends Account {
 
     }
 
-    public Saving(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder,
-                  LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate, LocalDate lastInterestDay) {
-        super(balance, primaryAccountHolder, secondaryAccountHolder, creationDate, status);
-        this.minBalance = minBalance;
-        this.interestRate = interestRate;
-        this.lastInterestDay = lastInterestDay;
-    }
-
-    public Saving(BigDecimal balance, AccountHolder accountHolder) {
-
-    }
-
-    public Saving(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status, BigDecimal minBalance, BigDecimal interestRate) {
-    }
-
+    //Use this constructor to create a new Saving Account on service
     public Saving(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee,
                   LocalDate creationDate, Status status, Money minBalance, BigDecimal interestRate) {
     }
-
 
     public Money getMinBalance() {
         return minBalance;

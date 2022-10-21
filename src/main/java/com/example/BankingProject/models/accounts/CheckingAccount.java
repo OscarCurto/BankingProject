@@ -23,17 +23,7 @@ public class CheckingAccount extends Account {
 
     }
 
-    public CheckingAccount(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, LocalDate creationDate, Status status, Money minimumBalance, BigDecimal monthlyMaintenanceFee, LocalDate lastInterestDay) {
-        super(balance, primaryAccountHolder, secondaryAccountHolder, creationDate, status);
-        this.minimumBalance = minimumBalance;
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-        this.lastInterestDay = lastInterestDay;
-    }
-
-    public CheckingAccount(BigDecimal balance, AccountHolder accountHolder) {
-
-    }
-
+    //Use this constructor to create a new Checking Account on service
     public CheckingAccount(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status) {
     }
 

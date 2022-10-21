@@ -5,12 +5,10 @@ import com.example.BankingProject.models.transactions.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    //List<Transaction> findTransactionById(Long id);
     List<Transaction> findByAccount(Account account);
 }

@@ -1,8 +1,6 @@
 package com.example.BankingProject.controllers.interfaces;
 
 import com.example.BankingProject.dtos.*;
-import com.example.BankingProject.embedables.Money;
-import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.users.Admin;
 import com.example.BankingProject.models.users.ThirdPartyUser;

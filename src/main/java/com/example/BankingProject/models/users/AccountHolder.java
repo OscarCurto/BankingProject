@@ -43,27 +43,12 @@ public class AccountHolder extends User {
 
     }
 
-    public AccountHolder(String name, String password, String mail, LocalDate dateOfBirth, String phone, Address address, Address mailingAddress, List<Account> primaryAccountHolderList,
-                         List<Account> secondaryAccountHolderList) {
-        super(name, password);
-        this.mail = mail;
-        this.dateOfBirth = dateOfBirth;
-        this.phone = phone;
-        this.address = address;
-        this.mailingAddress = mailingAddress;
-        this.primaryAccountHolderList = primaryAccountHolderList;
-        this.secondaryAccountHolderList = secondaryAccountHolderList;
-    }
-
     public AccountHolder(String name, String password, String mail, LocalDate dateOfBirth, String phone, Address address) {
         super(name, password);
         this.mail = mail;
         this.dateOfBirth = dateOfBirth;
         this.phone = phone;
         this.address = address;
-    }
-
-    public AccountHolder(String userName, String password) {
     }
 
     public String getMail() {

@@ -48,11 +48,6 @@ public abstract class Account {
 
     }
 
-    public Account(Money balance, AccountHolder primaryAccountHolder) {
-        this.balance = balance;
-        this.primaryAccountHolder = primaryAccountHolder;
-    }
-
     public Account(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, LocalDate creationDate, Status status) {
         this.balance = balance;
         this.primaryAccountHolder = primaryAccountHolder;

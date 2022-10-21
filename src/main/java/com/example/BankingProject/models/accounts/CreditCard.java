@@ -1,9 +1,7 @@
 package com.example.BankingProject.models.accounts;
 
 import com.example.BankingProject.embedables.Money;
-import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.users.AccountHolder;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -28,19 +26,7 @@ public class CreditCard extends Account{
 
     }
 
-    public CreditCard(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, LocalDate creationDate, Status status, Money creditLimit, BigDecimal interestRate, LocalDate lastInterestDay) {
-        super(balance, primaryAccountHolder, secondaryAccountHolder, creationDate, status);
-        this.creditLimit = creditLimit;
-        this.interestRate = interestRate;
-        this.lastInterestDay = lastInterestDay;
-    }
-
-    public CreditCard(BigDecimal balance, AccountHolder accountHolder) {
-    }
-
-    public CreditCard(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate, LocalDate creationDate, LocalDate lastAddedInterestRate) {
-    }
-
+    //Use this constructor to create a new Credit Card on service
     public CreditCard(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate, LocalDate creationDate, LocalDate lastAddedInterestRate) {
     }
 

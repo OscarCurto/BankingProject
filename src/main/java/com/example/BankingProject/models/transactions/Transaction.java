@@ -33,14 +33,6 @@ public class Transaction {
         this.account = account;
     }
 
-    public Transaction(String transactionType, long idSender, long idReceiver, BigDecimal amount, LocalDateTime dateTransaction) {
-        this.transactionType = transactionType;
-        this.idSender = idSender;
-        this.idReceiver = idReceiver;
-        this.amount = amount;
-        this.dateTransaction = dateTransaction;
-    }
-
     public long getId() {
         return id;
     }

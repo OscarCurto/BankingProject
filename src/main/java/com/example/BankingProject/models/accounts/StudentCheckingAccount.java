@@ -1,6 +1,5 @@
 package com.example.BankingProject.models.accounts;
 
-import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.users.AccountHolder;
 
@@ -15,15 +14,7 @@ public class StudentCheckingAccount extends Account {
 
     }
 
-
-    public StudentCheckingAccount(Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, LocalDate creationDate, Status status) {
-        super(balance, primaryAccountHolder, secondaryAccountHolder, creationDate, status);
-    }
-
-    public StudentCheckingAccount(BigDecimal balance, AccountHolder accountHolder) {
-
-    }
-
+    //Use this constructor to create a new Student Checking on service
     public StudentCheckingAccount(BigDecimal balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, BigDecimal penaltyFee, LocalDate creationDate, Status status) {
     }
 }
