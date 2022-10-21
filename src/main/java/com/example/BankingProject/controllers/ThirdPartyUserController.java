@@ -1,6 +1,6 @@
-package com.example.BankingProject.controllers.users;
+package com.example.BankingProject.controllers;
 
-import com.example.BankingProject.controllers.users.interfaces.ThirdPartyUserControllerInterface;
+import com.example.BankingProject.controllers.interfaces.ThirdPartyUserControllerInterface;
 import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.services.users.interfaces.ThirdPartyUserServiceInterface;

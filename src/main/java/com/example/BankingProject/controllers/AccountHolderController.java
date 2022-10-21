@@ -1,6 +1,6 @@
-package com.example.BankingProject.controllers.users;
+package com.example.BankingProject.controllers;
 
-import com.example.BankingProject.controllers.users.interfaces.AccountHolderControllerInterface;
+import com.example.BankingProject.controllers.interfaces.AccountHolderControllerInterface;
 import com.example.BankingProject.dtos.CheckOwnBalanceDTO;
 import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.models.accounts.Account;

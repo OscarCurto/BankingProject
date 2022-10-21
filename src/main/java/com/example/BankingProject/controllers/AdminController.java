@@ -1,6 +1,6 @@
-package com.example.BankingProject.controllers.users;
+package com.example.BankingProject.controllers;
 
-import com.example.BankingProject.controllers.users.interfaces.AdminControllerInterface;
+import com.example.BankingProject.controllers.interfaces.AdminControllerInterface;
 import com.example.BankingProject.dtos.*;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.users.Admin;

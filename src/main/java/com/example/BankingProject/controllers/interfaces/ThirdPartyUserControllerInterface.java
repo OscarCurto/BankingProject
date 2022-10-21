@@ -1,4 +1,4 @@
-package com.example.BankingProject.controllers.users.interfaces;
+package com.example.BankingProject.controllers.interfaces;
 
 import com.example.BankingProject.dtos.TransferMoneyDTO;
 import com.example.BankingProject.embedables.Money;
