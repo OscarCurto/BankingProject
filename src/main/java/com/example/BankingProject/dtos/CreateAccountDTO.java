@@ -3,9 +3,11 @@ package com.example.BankingProject.dtos;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.users.AccountHolder;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -24,6 +26,7 @@ public class CreateAccountDTO {
     private String accountType;
     private BigDecimal penaltyFee;
     private LocalDate creationDate;
+    @Range(min = 100, max = 100000)
     private BigDecimal creditLimit;
     private LocalDate lastAddedInterestRate;
 

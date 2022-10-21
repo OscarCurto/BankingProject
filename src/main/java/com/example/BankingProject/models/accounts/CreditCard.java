@@ -3,9 +3,12 @@ package com.example.BankingProject.models.accounts;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.users.AccountHolder;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,6 +18,8 @@ public class CreditCard extends Account{
     @Embedded
     private Money creditLimit = new Money(BigDecimal.valueOf(100L));
 
+    @DecimalMin(value = "0.1")
+    @DecimalMax(value = "0.2")
     private BigDecimal interestRate = new BigDecimal(0.2);
 
     private LocalDate lastInterestDay;
