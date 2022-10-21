@@ -119,6 +119,4 @@ public class BankingProjectApplication implements CommandLineRunner {
         SpringApplication.run(BankingProjectApplication.class, args);
     }
 
-    //TODO README
-
 }
