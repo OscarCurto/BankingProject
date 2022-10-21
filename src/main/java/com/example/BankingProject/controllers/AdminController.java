@@ -26,7 +26,7 @@ public class AdminController implements AdminControllerInterface {
         return adminServiceInterface.showAccounts();
     }
 
-    @PostMapping("/admin/createHolder")
+    @PostMapping("/admin/createAccount")
     @ResponseStatus(HttpStatus.CREATED)
     public Account createAccount(@RequestBody CreateAccountDTO createAccountDTO) {
         return adminServiceInterface.createAccount(createAccountDTO);

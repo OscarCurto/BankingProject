@@ -78,7 +78,7 @@ public class AdminControllerTest {
         String body = objectMapper.writeValueAsString(createAccountDTO);
         System.out.println(body);
 
-        MvcResult mvcResult = mockMvc.perform(post("/admin/createHolder").content(body)
+        MvcResult mvcResult = mockMvc.perform(post("/admin/createAccount").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("40.00"));
     }
