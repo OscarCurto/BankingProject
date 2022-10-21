@@ -4,11 +4,7 @@ import com.example.BankingProject.dtos.*;
 import com.example.BankingProject.embedables.Address;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
-import com.example.BankingProject.models.accounts.Account;
-import com.example.BankingProject.models.accounts.Saving;
 import com.example.BankingProject.models.users.AccountHolder;
-import com.example.BankingProject.models.users.Admin;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class AdminControllerTest {
 
-    //System.out.println(mvcResult.getResponse().getContentAsString());
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -61,6 +56,7 @@ public class AdminControllerTest {
      * checkAllBalanceById_works()
      * modifyBalanceById_works()
      * modifyStatusById_works()
+     * showAllUsers_works()
      * */
 
     @Test
@@ -149,7 +145,7 @@ public class AdminControllerTest {
 
     @Test
     @DisplayName("Show all users in the app")
-    void showAllUsers() throws Exception {
+    void showAllUsers_works() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/admin/showUsers")).andExpect(status().isAccepted()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Quim"));
     }
