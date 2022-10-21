@@ -119,6 +119,6 @@ public class BankingProjectApplication implements CommandLineRunner {
         SpringApplication.run(BankingProjectApplication.class, args);
     }
 
-    //TODO VALIDATIONS Y SETTERS DE MODELS, README, UMLS, LIMPIAR
+    //TODO COLLECTION POSTMAN, README, UMLS, LIMPIAR
 
 }
