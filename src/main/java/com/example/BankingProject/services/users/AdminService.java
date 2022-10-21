@@ -23,9 +23,6 @@ import java.util.List;
 public class AdminService implements AdminServiceInterface {
 
     @Autowired
-    AdminRepository adminRepository;
-
-    @Autowired
     AccountHolderRepository accountHolderRepository;
 
     @Autowired
@@ -61,7 +58,6 @@ public class AdminService implements AdminServiceInterface {
      * Check balance (admin)
      * Modify balance
      * Modify status account
-     * Modify password TODO
      * Get all users
      * */
 

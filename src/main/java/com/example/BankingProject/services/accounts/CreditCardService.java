@@ -6,7 +6,6 @@ import com.example.BankingProject.models.accounts.CreditCard;
 import com.example.BankingProject.models.users.AccountHolder;
 import com.example.BankingProject.repositories.accounts.CreditCardRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
-import com.example.BankingProject.services.accounts.interfaces.CreditCardServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Service
-public class CreditCardService implements CreditCardServiceInterface {
+public class CreditCardService {
 
     @Autowired
     CreditCardRepository creditCardRepository;

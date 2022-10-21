@@ -28,8 +28,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.BankingProject.enums.Status.FROZEN;
-
 @Service
 public class AccountHolderService implements AccountHolderServiceInterface {
 
@@ -62,6 +60,10 @@ public class AccountHolderService implements AccountHolderServiceInterface {
      * Create a new AccountHolderUser
      * Check own balance
      * Transfer Money
+     * Transfer Credit Card
+     * Transfer Checking
+     * Transfer Saving
+     * Fraud detecting
      * */
 
     //Use this method to show all Holder accounts
@@ -77,8 +79,6 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     public AccountHolder createAccountHolderUser(AccountHolder accountHolder) {
         return accountHolderRepository.save(accountHolder);
     }
-
-    //Use this method to log into your account
 
     //Use this method to check balance (User)
     public BigDecimal checkBalanceUser(CheckOwnBalanceDTO checkOwnBalanceDTO) {
@@ -166,6 +166,7 @@ public class AccountHolderService implements AccountHolderServiceInterface {
         return savingSender.getBalance().getAmount();
     }
 
+    //Use this method to detect a fraud and freeze the account
     public void fraudDetection(Transaction transaction) {
         Account account = transaction.getAccount();
 

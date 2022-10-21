@@ -3,27 +3,19 @@ package com.example.BankingProject.services.accounts;
 import com.example.BankingProject.dtos.CreateAccountDTO;
 import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
-import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.Saving;
-import com.example.BankingProject.models.transactions.Transaction;
 import com.example.BankingProject.models.users.AccountHolder;
-import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.SavingRepository;
-import com.example.BankingProject.repositories.transactions.TransactionRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
-import com.example.BankingProject.security.SecurityConfiguration;
-import com.example.BankingProject.services.accounts.interfaces.SavingServiceInterface;
-import com.example.BankingProject.services.users.AccountHolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 
 @Service
-public class SavingService implements SavingServiceInterface {
+public class SavingService {
 
     @Autowired
     SavingRepository savingRepository;

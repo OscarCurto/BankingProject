@@ -1,29 +1,23 @@
 package com.example.BankingProject.services.accounts;
 
 import com.example.BankingProject.dtos.CreateAccountDTO;
-import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.accounts.Account;
 import com.example.BankingProject.models.accounts.CheckingAccount;
 import com.example.BankingProject.models.accounts.StudentCheckingAccount;
-import com.example.BankingProject.models.transactions.Transaction;
 import com.example.BankingProject.models.users.AccountHolder;
-import com.example.BankingProject.repositories.accounts.AccountRepository;
 import com.example.BankingProject.repositories.accounts.CheckingAccountRepository;
 import com.example.BankingProject.repositories.accounts.StudentCheckingAccountRepository;
 import com.example.BankingProject.repositories.users.AccountHolderRepository;
-import com.example.BankingProject.services.accounts.interfaces.CheckingAccountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 
 
 @Service
-public class CheckingAccountService implements CheckingAccountServiceInterface {
+public class CheckingAccountService {
 
     @Autowired
     CheckingAccountRepository checkingAccountRepository;
