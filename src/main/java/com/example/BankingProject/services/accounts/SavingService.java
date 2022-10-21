@@ -47,7 +47,7 @@ public class SavingService implements SavingServiceInterface {
                     createAccountDTO.getPenaltyFee(),
                     createAccountDTO.getCreationDate(),
                     createAccountDTO.getStatus(),
-                    createAccountDTO.getMinBalance(),
+                    new Money(createAccountDTO.getMinBalance()),
                     createAccountDTO.getInterestRate()
 
             );

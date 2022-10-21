@@ -4,6 +4,8 @@ import com.example.BankingProject.embedables.Money;
 import com.example.BankingProject.enums.Status;
 import com.example.BankingProject.models.users.AccountHolder;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -14,7 +16,9 @@ public class CreateAccountDTO {
     private AccountHolder primaryAccountHolder;
     private AccountHolder secondaryAccountHolder;
     private Status status;
-    private Money minBalance;
+    @DecimalMin(value = "100")
+    private BigDecimal minBalance;
+    @DecimalMax(value = "0.5")
     private BigDecimal interestRate;
     private LocalDate lastInterestDay;
     private String accountType;
@@ -24,7 +28,7 @@ public class CreateAccountDTO {
     private LocalDate lastAddedInterestRate;
 
     public CreateAccountDTO(Long id, Money balance, AccountHolder primaryAccountHolder, AccountHolder secondaryAccountHolder, Status status,
-                            Money minBalance, BigDecimal interestRate, LocalDate lastInterestDay, String accountType) {
+                            BigDecimal minBalance, BigDecimal interestRate, LocalDate lastInterestDay, String accountType) {
         this.id = id;
         this.balance = balance;
         this.primaryAccountHolder = primaryAccountHolder;
@@ -76,11 +80,11 @@ public class CreateAccountDTO {
         this.status = status;
     }
 
-    public Money getMinBalance() {
+    public BigDecimal getMinBalance() {
         return minBalance;
     }
 
-    public void setMinBalance(Money minBalance) {
+    public void setMinBalance(BigDecimal minBalance) {
         this.minBalance = minBalance;
     }
 
