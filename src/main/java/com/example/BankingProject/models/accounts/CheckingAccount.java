@@ -15,7 +15,7 @@ public class CheckingAccount extends Account {
     @Embedded
     private Money minimumBalance = new Money(BigDecimal.valueOf(250L));
 
-    private BigDecimal monthlyMaintenanceFee = new BigDecimal(0.01);
+    private BigDecimal monthlyMaintenanceFee = new BigDecimal(12);
 
     private LocalDate lastInterestDay;
 
