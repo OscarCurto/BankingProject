@@ -119,6 +119,6 @@ public class BankingProjectApplication implements CommandLineRunner {
         SpringApplication.run(BankingProjectApplication.class, args);
     }
 
-    //TODO COLLECTION POSTMAN, README, UMLS, LIMPIAR
+    //TODO README, UMLS, LIMPIAR
 
 }
